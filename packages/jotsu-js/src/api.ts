@@ -2,7 +2,7 @@
 
 import {ErrorDetail} from 'types';
 
-export const API_URL = window.process?.env?.API_URL ? window.process?.env.API_URL : 'https://api.gauged.ai';
+export const API_URL = window.process?.env?.API_URL ? window.process?.env.API_URL : 'https://api.jotsu.com';
 
 export class Client {
     public readonly base;
