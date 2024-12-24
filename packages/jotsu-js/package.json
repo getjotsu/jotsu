@@ -1,0 +1,24 @@
+{
+  "name": "@jotsu/jotsu-js",
+  "version": "0.1.0",
+  "main": "dist/jotsu.js",
+  "types": "dist/jotsu.d.ts",
+  "scripts": {
+    "build": "webpack --mode production",
+    "watch": "webpack --mode development --watch",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "description": "",
+  "devDependencies": {
+    "dotenv-webpack": "^8.1.0",
+    "ts-loader": "^9.5.1",
+    "typescript-declaration-webpack-plugin": "^0.3.0",
+    "webpack": "^5.94.0",
+    "webpack-bundle-analyzer": "^4.10.2",
+    "webpack-cli": "^5.1.4"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "typescript": "^5.7.2"
+  }
+}

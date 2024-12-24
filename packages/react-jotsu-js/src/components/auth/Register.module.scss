@@ -1,0 +1,64 @@
+@use "scss/variables" as *;
+
+.form {
+    width: 100%;
+
+    :global {
+        label {
+            display: inline-block;
+            margin-bottom: .5rem;
+            font-size: 1rem;
+            font-weight: 400;
+            line-height: 1.5;
+        }
+
+        input {
+            width: 100%;
+            box-sizing: border-box;
+            -webkit-box-sizing:border-box;
+            -moz-box-sizing: border-box;
+            display: block;
+            padding: .375rem .75rem;
+            font-size: 1rem;
+            line-height: 1.5;
+            color: #495057;
+            background-color: #fff;
+            background-clip: padding-box;
+            border: 1px solid var(--input-border-color);
+            border-radius: .25rem;
+            transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+
+            :focus {
+                border-color: var(--input-border-color-focus);
+                box-shadow: 0 0 0 3px;
+                outline: 3px solid transparent;
+            }
+        }
+
+        .field-group {
+            margin: 1rem 0;
+
+            .alert {
+                display: inline-block;
+                color: $danger-red;
+                margin-top: .25rem;
+            }
+        }
+
+        button[type="submit"] {
+            background-color: var(--button-bg-color);
+            color: var(--button-color);
+            padding: .375rem .75rem;
+            margin: 1rem 0;
+            width: 100%;
+            font-size: 1rem;
+            line-height: 1.5;
+            border-radius: .25em;
+            border: 1px solid transparent;
+
+            &:hover {
+                background-color: #{'hsl(from var(--button-bg-color) h s calc(l - 5))'}
+            }
+        }
+    }
+}

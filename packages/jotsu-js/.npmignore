@@ -1,0 +1,6 @@
+/src
+/tsconfig.json
+/webpack.config.cjs
+/*.tgz
+/.env
+/.env.*

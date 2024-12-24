@@ -1,0 +1,22 @@
+$moderate-violet: #9053c7;
+$kelly-green: #52c41a;
+$pastel-red: #ff6c62;
+$philippine-gray: #8c8c8c;
+
+$cerulean-breeze: #4ea9ff;
+$vivid-magenta: #fe1fcd;
+
+$black: #000000e0;
+$white: #ffffff;
+
+$danger-red: #f32013;
+
+:root {
+    --primary-color: #{$cerulean-breeze};
+
+    --button-bg-color: #{$cerulean-breeze};
+    --button-color: #{$white};
+
+    --input-border-color: #ced4da;
+    --input-border-color-focus: var(--primary-color);
+}

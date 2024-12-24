@@ -1,0 +1,13 @@
+/venv
+/.idea
+/*.iml
+/out
+__pycache__
+.DS_Store
+.env
+.env.*
+*.db
+dist
+node_modules
+docker-compose.override.yaml
+*.tgz
