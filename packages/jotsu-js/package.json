@@ -11,14 +11,13 @@
   "description": "",
   "devDependencies": {
     "dotenv-webpack": "^8.1.0",
+    "prettier": "^3.4.2",
     "ts-loader": "^9.5.1",
+    "typescript": "^5.7.2",
     "typescript-declaration-webpack-plugin": "^0.3.0",
     "webpack": "^5.94.0",
     "webpack-bundle-analyzer": "^4.10.2",
     "webpack-cli": "^5.1.4"
   },
-  "license": "MIT",
-  "dependencies": {
-    "typescript": "^5.7.2"
-  }
+  "license": "MIT"
 }

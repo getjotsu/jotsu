@@ -1,0 +1,13 @@
+.buttonGroup {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: .2rem;
+    margin: .5rem 0;
+
+    :global {
+        input, button {
+            margin: 0;
+        }
+    }
+}

@@ -19,36 +19,41 @@ export default [
                 file: packageJson.main,
                 format: 'cjs',
                 sourcemap: true,
+                exports: 'named',
             },
             {
                 file: packageJson.module,
                 format: 'esm',
                 sourcemap: true,
+                exports: 'named',
             },
         ],
         plugins: [
             peerDepsExternal(),
-            resolve(),
+            resolve({
+                resolveOnly: (module) => module.includes('jotsu'),
+            }),
             commonjs(),
-            typescript({tsconfig: './tsconfig.json'}),
+            typescript({ tsconfig: './tsconfig.json' }),
             terser(),
             postcss({
                 extract: false,
                 modules: true,
                 use: [
-                    ['sass', {
-                        includePaths: [
-                            './src'
-                        ]
-                    }]
-                ]
+                    [
+                        'sass',
+                        {
+                            includePaths: ['./src'],
+                        },
+                    ],
+                ],
             }),
         ],
-        external: ['react', 'react-dom'],
+        external: ['react', 'react-dom', 'react-hook-form'],
     },
     {
         input: 'src/index.ts',
-        output: [{file: 'dist/types.d.ts', format: 'es'}],
+        output: [{ file: 'dist/types.d.ts', format: 'es' }],
         plugins: [dts.default()],
     },
 ];

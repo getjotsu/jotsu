@@ -1,0 +1,52 @@
+@use "scss/variables" as *;
+
+.form {
+    width: 100%;
+
+    :global {
+        input {
+            margin-bottom: 1rem;
+        }
+
+        .has-field-help input {
+            margin-bottom: .2rem;
+        }
+
+        .error .field-help {
+            color: $danger-red;
+        }
+    ;
+    }
+}
+
+.formGroup {
+    :global {
+        input {
+            width: 100%;
+            display: block;
+            box-sizing: border-box;
+        }
+    }
+}
+
+:global {
+    :local(.formGroup) {
+        &.required label:after {
+            content: ' *';
+            color: $danger-red;
+        }
+    }
+}
+
+.fieldHelp, .formHelp {
+    display: inline-block;
+    margin-bottom: 1rem;
+}
+
+:global {
+    :local(.form) {
+        &.error .form-help {
+            color: $danger-red;
+        }
+    }
+}

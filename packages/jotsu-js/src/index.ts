@@ -1,10 +1,18 @@
-export type {ErrorDetail, User, Role, Account, Form, AuthToken} from './types';
+export { Client, StorageClient } from './api';
+export { domReady } from './dom';
 
-export {Client, StorageClient} from './api';
-export {domReady} from './dom';
+export { fetchAccount } from './services';
+export { fetchUsers, deleteUser } from './services';
+export { fetchForms, fetchForm, formSubmit } from './services';
+export { fetchMe, login, register, forgotPassword, resetPassword } from './services';
 
-export {fetchAccount} from './services';
-export {fetchUsers, deleteUser} from './services';
-export {fetchForms, fetchForm, formSubmit} from './services';
-
-export {getDocumentAccountId, getAccountIdFromElement, getTestMode} from './utils';
+export {
+    getAccountIdFromElement,
+    getDocumentAccountId,
+    getErrorDetail,
+    getFirstQueryParam,
+    getTestMode,
+    isUndefined,
+    isDefined,
+    redirectURI,
+} from './utils';

@@ -1,3 +1,5 @@
+import { ErrorDetail } from './types';
+
 export function buildUrlWithOffsetLimit(baseUrl: string, offset?: number, limit?: number) {
     const url = new URL(baseUrl);
     if (typeof offset !== 'undefined') {
@@ -9,13 +11,13 @@ export function buildUrlWithOffsetLimit(baseUrl: string, offset?: number, limit?
     return url.toString();
 }
 
-export function getDocumentAccountId(): string|undefined {
+export function getDocumentAccountId(): string | undefined {
     const meta = document.head.querySelector<HTMLMetaElement>('meta[name="gauged-account"]');
     if (meta && meta.content) {
         return meta.content;
     }
     if (document.body.dataset.account) {
-        return document.body.dataset.account
+        return document.body.dataset.account;
     }
     const account = new URLSearchParams(window.location.search).get('account');
     if (account) {
@@ -56,7 +58,7 @@ export function getTestMode(element: HTMLElement) {
 
 export function formDataAsJson(formData: FormData) {
     const object = {} as Record<string, any>;
-    formData.forEach((value, key) => object[key] = value);
+    formData.forEach((value, key) => (object[key] = value));
     return object;
 }
 
@@ -77,7 +79,7 @@ export function formRedirect(form: HTMLFormElement) {
     return false;
 }
 
-export function findErrorHolder(element: HTMLElement): HTMLElement|null {
+export function findErrorHolder(element: HTMLElement): HTMLElement | null {
     const ariaErrorMessage = element.getAttribute('aria-errormessage');
     if (ariaErrorMessage) {
         const element = document.getElementById(ariaErrorMessage);
@@ -101,7 +103,7 @@ export function saveInnerText(element: HTMLElement) {
     }
 }
 
-export function setErrorHolder(errorHolder: HTMLElement|null|undefined, message: string) {
+export function setErrorHolder(errorHolder: HTMLElement | null | undefined, message: string) {
     if (errorHolder) {
         saveInnerText(errorHolder);
         errorHolder.innerText = message;
@@ -115,7 +117,7 @@ export function setElementError(element: HTMLElement, message: string) {
     setErrorHolder(errorHolder, message);
 }
 
-export function resetErrorHolder(errorHolder: HTMLElement|null|undefined) {
+export function resetErrorHolder(errorHolder: HTMLElement | null | undefined) {
     if (errorHolder) {
         if (errorHolder.hasAttribute('data-inner-text')) {
             errorHolder.innerText = errorHolder.dataset.innerText || '';
@@ -134,3 +136,35 @@ export function resetElementError(element: HTMLElement) {
     }
 }
 
+export function isUndefined(value: any): boolean {
+    return typeof value === 'undefined';
+}
+
+export function isDefined(value: any): boolean {
+    return !isUndefined(value);
+}
+
+export function isString(s: any) {
+    return typeof s === 'string' || s instanceof String;
+}
+
+export function isFunction(f: any) {
+    return typeof f === 'function';
+}
+
+export function getErrorDetail(e: any): string {
+    const detail = e as ErrorDetail;
+    const error = detail.detail ? detail.detail : e;
+    return isString(error) ? error.toString() : JSON.stringify(error);
+}
+
+export function redirectURI() {
+    const params = new URLSearchParams(document.location.search);
+    const location = params.get('redirect_uri');
+    return location ? location : '/';
+}
+
+export function getFirstQueryParam(name: string) {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(name);
+}
