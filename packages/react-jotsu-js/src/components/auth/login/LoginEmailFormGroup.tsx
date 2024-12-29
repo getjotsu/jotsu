@@ -5,7 +5,7 @@ import { AuthFormGroupProps } from 'types';
 const LoginEmailFormGroup = React.forwardRef<HTMLInputElement, AuthFormGroupProps>((props, ref) => {
     return (
         <FormGroup
-            id={'email'}
+            id={'username'}
             type={'email'}
             label={'Email'}
             {...props}

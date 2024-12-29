@@ -29,9 +29,6 @@ const ResetPasswordPage = () => {
                     apiClient={apiClient}
                     header={<ResetPasswordHeader />}
                     footer={<ResetPasswordFooter />}
-                    help={{
-                        email: <small>Enter the email you used when you created your account.</small>,
-                    }}
                     show={{
                         reset: true,
                     }}

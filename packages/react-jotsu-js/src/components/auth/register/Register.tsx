@@ -102,14 +102,12 @@ const Register = (
                             required: true,
                         })}
                         errors={errors}
-                        required
                     />
                     <RegisterLastNameFormGroup
                         {...register('last_name', {
                             required: true,
                         })}
                         errors={errors}
-                        required
                     />
                 </>
             )}
@@ -118,7 +116,6 @@ const Register = (
                     required: true,
                 })}
                 errors={errors}
-                required
             />
             <RegisterPasswordFormGroup
                 {...register('password', {
@@ -131,7 +128,6 @@ const Register = (
                 })}
                 autoComplete={'new-password'}
                 errors={errors}
-                required
             />
             <RegisterConfirmPasswordFormGroup
                 {...register('confirm_password', {
@@ -144,7 +140,6 @@ const Register = (
                 })}
                 autoComplete={'new-password'}
                 errors={errors}
-                required
             />
             <ButtonGroup disabled={busy} showReset={props.show?.reset} submitText={submitText} />
             {props.footer}

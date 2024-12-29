@@ -4,7 +4,15 @@ import { AuthFormGroupProps } from 'types';
 
 const RegisterEmailFormGroup = React.forwardRef<HTMLInputElement, AuthFormGroupProps>((props, ref) => {
     return (
-        <FormGroup id={'email'} type={'email'} label={'Email'} {...props} ref={ref} autoComplete={'email'} required />
+        <FormGroup
+            id={'username'}
+            type={'email'}
+            label={'Email'}
+            {...props}
+            ref={ref}
+            autoComplete={'email'}
+            required
+        />
     );
 });
 

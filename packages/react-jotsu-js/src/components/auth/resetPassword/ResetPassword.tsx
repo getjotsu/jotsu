@@ -105,7 +105,6 @@ const ResetPassword = (
                 })}
                 autoComplete={'new-password'}
                 errors={errors}
-                required
             />
             <ResetPasswordConfirmPasswordFormGroup
                 {...register('confirm_password', {
@@ -118,7 +117,6 @@ const ResetPassword = (
                 })}
                 autoComplete={'new-password'}
                 errors={errors}
-                required
             />
             <ButtonGroup disabled={busy} showReset={props.show?.reset} submitText={submitText} />
             {props.footer}

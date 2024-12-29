@@ -152,6 +152,7 @@ export function isFunction(f: any) {
     return typeof f === 'function';
 }
 
+/** FIXME: correctly show TypeError **/
 export function getErrorDetail(e: any): string {
     const detail = e as ErrorDetail;
     const error = detail.detail ? detail.detail : e;
