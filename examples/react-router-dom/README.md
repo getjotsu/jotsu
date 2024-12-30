@@ -9,9 +9,6 @@ REACT_APP_ACCOUNT_ID=123456
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-Notes:
-* [MVP.css](https://andybrewer.github.io/mvp/) added to `index.html` for default styling.
-* Added `basedUrl`: 'src' to tsconfig.json.
 
 ## Available Scripts
 
@@ -34,3 +31,25 @@ The build is minified and the filenames include the hashes.\
 Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+
+
+## Development
+Using `yarn link` is sensitive to React versions.
+
+To link in dev versions of the libraries, do the following:
+
+In this folder:
+```shell
+cd node_modules/react && yarn link
+cd node_modules/react-dom && yarn link
+```
+
+In `packages/react-jotsu-js`:
+```shell
+npm link react react-dom
+```
+
+In this folder:
+```shell
+yarn link '@jotsu/jotsu-js' '@jotsu/react-jotsu-js'
+```

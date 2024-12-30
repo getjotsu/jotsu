@@ -26,6 +26,7 @@ export type User = {
     roles?: Role[];
 };
 
+/* FIXME: rename to FormInstance to avoid conflict with <Form/> */
 export type Form = {
     id: string;
     name: string;
