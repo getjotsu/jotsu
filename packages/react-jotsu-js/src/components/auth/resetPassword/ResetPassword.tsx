@@ -31,7 +31,7 @@ const ResetPassword = (
         message?: ReactNode;
         onFinish?: (email: string) => void;
         help?: {
-            email?: string;
+            email?: ReactNode;
         };
     } & AuthFormProps,
 ) => {

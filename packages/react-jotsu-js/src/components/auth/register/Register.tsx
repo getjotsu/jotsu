@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { ReactNode, useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import classNames from 'classnames';
 
@@ -29,9 +29,9 @@ const Register = (
         message: React.JSX.Element;
         onRegister?: (user: User) => void;
         help?: {
-            email?: string;
-            password?: string;
-            confirmPassword?: string;
+            email?: ReactNode;
+            password?: ReactNode;
+            confirmPassword?: ReactNode;
         };
         show?: RegisterShowOpts & Exclude<AuthFormProps['show'], undefined>;
     } & Omit<AuthFormProps, 'show'>,

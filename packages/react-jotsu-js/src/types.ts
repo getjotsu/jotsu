@@ -19,5 +19,5 @@ export type AuthFormProps = BaseProps & {
 export type AuthFormGroupProps = Partial<UseFormReturn> & {
     autoComplete?: string;
     errors: UseFormReturn['formState']['errors'];
-    help?: string;
+    help?: React.ReactNode;
 };

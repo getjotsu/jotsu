@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { FieldErrors } from 'react-hook-form';
 import classNames from 'classnames';
 import { kebabCase } from 'change-case';
@@ -10,7 +10,7 @@ import { fieldError } from './utils';
 type FormGroupProps = React.InputHTMLAttributes<HTMLInputElement> & {
     unstyled?: boolean;
     label: string;
-    help?: string;
+    help?: ReactNode;
     errors: FieldErrors;
 };
 

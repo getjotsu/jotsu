@@ -35,7 +35,7 @@ const ForgotPassword = (
         message?: ReactNode | ((email: string) => ReactNode);
         onFinish?: (email: string) => void;
         help?: {
-            email?: string;
+            email?: ReactNode;
         };
     } & AuthFormProps,
 ) => {

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { ReactNode, useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import classNames from 'classnames';
 
@@ -22,8 +22,8 @@ const Login = (
     props: {
         onLogin?: (data: LoginResponse) => void;
         help?: {
-            email?: string;
-            password?: string;
+            email?: ReactNode;
+            password?: ReactNode;
         };
     } & AuthFormProps,
 ) => {
