@@ -25,6 +25,7 @@
     "webpack": "^5.97.1"
   },
   "dependencies": {
+    "@jotsu/jotsu-js": "^0.2.0",
     "change-case": "^5.4.4",
     "classnames": "^2.5.1"
   },
