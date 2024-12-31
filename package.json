@@ -1,32 +1,20 @@
 {
-    "name": "jotsu",
-    "workspaces": {
-        "packages": [
-            "packages/jotsu-js",
-            "packages/react-jotsu-js",
-            "packages/dh-jotsu-js"
-        ],
-        "nohoist": [
-            "preact",
-            "**/preact",
-            "**/preact/**",
-            "react",
-            "**/react",
-            "**/react/**",
-            "react-dom",
-            "**/react-dom",
-            "**/react-dom/**",
-            "react-hook-form",
-            "**/react-hook-form",
-            "**/react-hook-form/**"
-        ]
-    },
-    "scripts": {
-        "build": "npm run build:jotsu-js && npm run build:react-jotsu-js && npm run build:dh-jotsu-js",
-        "build:jotsu-js": "cd packages/jotsu-js && npm run build",
-        "build:react-jotsu-js": "cd packages/react-jotsu-js && npm run build",
-        "build:dh-jotsu-js": "cd packages/dh-jotsu-js && npm run build"
-    },
-    "license": "MIT",
-    "private": true
+  "name": "jotsu",
+  "workspaces": [
+    "packages/jotsu-js",
+    "packages/react-jotsu-js",
+    "packages/dh-jotsu-js"
+  ],
+  "scripts": {
+    "build": "npm run build:jotsu-js && npm run build:react-jotsu-js && npm run build:dh-jotsu-js",
+    "build:jotsu-js": "cd packages/jotsu-js && npm run build",
+    "build:react-jotsu-js": "cd packages/react-jotsu-js && npm run build",
+    "build:dh-jotsu-js": "cd packages/dh-jotsu-js && npm run build"
+  },
+  "license": "MIT",
+  "private": true,
+  "dependencies": {},
+  "devDependencies": {
+    "lerna": "^8.1.9"
+  }
 }
