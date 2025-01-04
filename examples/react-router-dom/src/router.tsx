@@ -8,6 +8,7 @@ import LoginPage from 'pages/LoginPage';
 import RegisterPage from 'pages/RegisterPage';
 import ForgotPasswordPage from 'pages/ForgotPasswordPage';
 import ResetPasswordPage from 'pages/ResetPasswordPage';
+import ConfirmEmailPage from 'pages/ConfirmEmailPage';
 
 export function HydrateFallback() {
     return (
@@ -35,6 +36,10 @@ const router = [
     {
         path: '/reset-password',
         element: <ResetPasswordPage />,
+    },
+    {
+        path: '/confirm-email',
+        element: <ConfirmEmailPage />,
     },
     {
         path: '/',

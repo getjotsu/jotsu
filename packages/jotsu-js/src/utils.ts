@@ -152,6 +152,10 @@ export function isFunction(f: any) {
     return typeof f === 'function';
 }
 
+export function isError(e: any) {
+    return e instanceof Error;
+}
+
 export function getErrorDetail(e: any): string {
     if (e instanceof TypeError) {
         const typeError = e as TypeError;

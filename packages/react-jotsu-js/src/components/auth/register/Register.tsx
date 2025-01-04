@@ -2,7 +2,7 @@ import React, { ReactNode, useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import classNames from 'classnames';
 
-import { type User, type RegisterData, getErrorDetail, register as registerService } from '@jotsu/jotsu-js';
+import { type User, type RegisterData, getErrorDetail, register as registerService, isFunction } from '@jotsu/jotsu-js';
 
 import Form from 'components/forms/Form';
 import FormHelp from 'components/forms/FormHelp';
@@ -26,7 +26,7 @@ type RegisterFormData = Omit<RegisterData, 'email'> & {
 
 const Register = (
     props: {
-        message: React.JSX.Element;
+        message: React.JSX.Element | ((email: string) => React.JSX.Element);
         onRegister?: (user: User) => void;
         help?: {
             email?: ReactNode;
@@ -48,7 +48,7 @@ const Register = (
 
     const [busy, setBusy] = useState(false);
     const [formError, setFormError] = useState('');
-    const [success, setSuccess] = useState(false);
+    const [successEmail, setSuccessEmail] = useState<string>('');
 
     const className = classNames('register-form', {
         error: !!formError,
@@ -73,7 +73,7 @@ const Register = (
         try {
             const res = await registerService(props.apiClient, data);
             props.onRegister?.(res);
-            setSuccess(true);
+            setSuccessEmail(data.email);
         } catch (e) {
             setFormError(getErrorDetail(e));
         } finally {
@@ -81,8 +81,11 @@ const Register = (
         }
     };
 
-    if (success) {
-        return props.message;
+    if (successEmail) {
+        if (isFunction(props.message)) {
+            return (props.message as (email: string) => React.JSX.Element)(successEmail);
+        }
+        return props.message as React.JSX.Element;
     }
 
     return (

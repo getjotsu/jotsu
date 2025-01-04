@@ -10,9 +10,10 @@ const RegisterFooter = () => (
     </div>
 );
 
-const RegistrationSuccessMessage = () => (
+const RegistrationSuccessMessage = (props: { email: string }) => (
     <section>
         <p>Thank you for registering!</p>
+        <p>Please confirm your email by clicking the link we sent to '{props.email}'.</p>
         <a href={'/login'}>Login</a>
     </section>
 );
@@ -24,7 +25,7 @@ const RegisterPage = () => {
                 <Register
                     header={<RegisterHeader />}
                     footer={<RegisterFooter />}
-                    message={<RegistrationSuccessMessage />}
+                    message={(email: string) => <RegistrationSuccessMessage email={email} />}
                     apiClient={apiClient}
                     show={{ firstLastName: true, reset: true }}
                 />
