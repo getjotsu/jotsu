@@ -1,7 +1,9 @@
 # Jotsu
 
 ## Development
+Use lerna and npm to build.
+
 ```shell
-yarn install
-yarn build
+npm install
+npm build
 ```
