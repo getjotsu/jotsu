@@ -1,5 +1,5 @@
-import {findFormGroup} from './common';
-import {setErrorHolder} from '@jotsu/jotsu-js';
+import { setErrorHolder } from 'utils';
+import { findFormGroup } from './common';
 
 function findFormRadiosByName(form: HTMLFormElement, name: string): HTMLInputElement[] {
     return Array.from(form.querySelectorAll<HTMLInputElement>(`input[name="${name}"]`));
@@ -9,7 +9,7 @@ function findFormRadiosByName(form: HTMLFormElement, name: string): HTMLInputEle
  * Radios use the first errormessage on an input with the given name.
  * If no input has an errormessage, then the first describedby element is used.
  */
-function findRadioErrorHolder(inputs: HTMLInputElement[]): HTMLElement|null {
+function findRadioErrorHolder(inputs: HTMLInputElement[]): HTMLElement | null {
     for (const input of inputs) {
         const ariaErrorMessage = input.getAttribute('aria-errormessage');
         if (ariaErrorMessage) {

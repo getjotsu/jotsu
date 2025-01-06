@@ -1,17 +1,9 @@
-import {formValidate} from './validate';
-import {cancelableCustomEvent, customEvent} from 'lib/events';
-import {
-    type ErrorDetail,
-    findErrorHolder,
-    formDataAsJson,
-    formRedirect,
-    formSubmit,
-    formTemplate,
-    getAccountIdFromElement,
-    getTestMode,
-    setErrorHolder
-} from '../../../../jotsu-js';
-import {formReset} from './reset';
+import { formValidate } from './validate';
+import { cancelableCustomEvent, customEvent } from 'lib/events';
+import { type ErrorDetail, formSubmit, getAccountIdFromElement, getTestMode } from '@jotsu/jotsu-js';
+
+import { formReset } from './reset';
+import { findErrorHolder, formDataAsJson, formRedirect, formTemplate, setErrorHolder } from 'utils';
 
 function formSuccess(form: HTMLFormElement, res: any) {
     customEvent('gauged.form.submit.success', res);
@@ -52,13 +44,13 @@ export async function formSubmitHandler(event: SubmitEvent) {
     if (testMode) {
         if (testMode !== 'error') {
             const data = formDataAsJson(new FormData(form));
-            return formSuccess(form, {data});
+            return formSuccess(form, { data });
         } else {
             const errorDetail: ErrorDetail = {
                 detail: 'Test Error',
-                res: new Response()
-            }
-            return formError(event, form, errorDetail)
+                res: new Response(),
+            };
+            return formError(event, form, errorDetail);
         }
     }
 
@@ -67,6 +59,6 @@ export async function formSubmitHandler(event: SubmitEvent) {
         const res = await formSubmit(accountId, form);
         return formSuccess(form, res);
     } catch (e) {
-        return formError(event, form, e as ErrorDetail)
+        return formError(event, form, e as ErrorDetail);
     }
 }

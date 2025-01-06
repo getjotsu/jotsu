@@ -1,10 +1,8 @@
-import {resetElementError} from '../../../../jotsu-js';
+import { resetElementError } from 'utils';
+import { customEvent } from 'lib/events';
+import { findFormGroup } from './validate/common';
 
-import {customEvent} from 'lib/events';
-import {findFormGroup} from './validate/common';
-
-
-export function resetInput(input: HTMLInputElement|HTMLTextAreaElement): true {
+export function resetInput(input: HTMLInputElement | HTMLTextAreaElement): true {
     const formGroup = findFormGroup(input);
     if (formGroup) {
         formGroup.classList.remove('is-error');
@@ -15,7 +13,7 @@ export function resetInput(input: HTMLInputElement|HTMLTextAreaElement): true {
 }
 
 export function formReset(form: HTMLFormElement) {
-    form.querySelectorAll<HTMLInputElement|HTMLTextAreaElement>('input, textarea').forEach(input => {
+    form.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>('input, textarea').forEach((input) => {
         resetInput(input);
     });
     form.removeAttribute('data-invalid');

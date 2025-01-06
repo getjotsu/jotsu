@@ -1,6 +1,6 @@
-import {setElementError} from '../../../../../jotsu-js';
+import { setElementError } from 'utils';
 
-export function findFormGroup(input: HTMLElement): HTMLElement|null {
+export function findFormGroup(input: HTMLElement): HTMLElement | null {
     let parent = input.parentElement;
     while (parent) {
         if (parent.classList.contains('form-group')) {
@@ -13,7 +13,6 @@ export function findFormGroup(input: HTMLElement): HTMLElement|null {
     }
     return null;
 }
-
 
 export function getIntAttr(element: HTMLElement, name: string) {
     const attr = element.getAttribute(name);
@@ -38,7 +37,7 @@ function inputError(input: HTMLElement): false {
 }
 
 export function fieldError(input: HTMLElement, type: string, defaultErrorMessage: string) {
-    setElementError(input, errorMessage(input, type) || defaultErrorMessage)
+    setElementError(input, errorMessage(input, type) || defaultErrorMessage);
     return inputError(input);
 }
 
