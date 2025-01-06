@@ -7,7 +7,7 @@ export const API_URL = window.process?.env?.API_URL ? window.process?.env.API_UR
 export class Client {
     public readonly base;
     public readonly accountId: string;
-    private token: string | undefined;
+    protected token: string | undefined;
 
     constructor(accountId: string, options?: { token?: string; base?: string }) {
         this.base = options?.base ? options.base : API_URL;
