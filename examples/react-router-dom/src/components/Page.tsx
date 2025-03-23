@@ -2,14 +2,24 @@ import { PropsWithChildren, useState } from 'react';
 import StyleDropdown from './StyleDropdown';
 
 const Page = (props: PropsWithChildren) => {
-    const [loaded, setLoaded] = useState(false);
+    const [value, setValue] = useState(() => {
+        return localStorage.getItem(StyleDropdown.KEY) || 'MVP';
+    });
+    const [loaded, setLoaded] = useState<Record<string, boolean>>({});
+
+    const onLoad = (value: string) => {
+        console.log(`Loaded '${value}`);
+        setLoaded((loaded) => {
+            return { ...loaded, [value]: true };
+        });
+    };
 
     return (
         <>
             <header className={'header'}>
-                <StyleDropdown onChange={() => setLoaded(false)} onLoad={() => setLoaded(true)} />
+                <StyleDropdown onChange={setValue} onLoad={onLoad} />
             </header>
-            {loaded && <main>{props.children}</main>}
+            {loaded[value] ? <main>{props.children}</main> : null}
         </>
     );
 };
