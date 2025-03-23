@@ -8,7 +8,7 @@ module.exports = {
     entry: './src/index.tsx',
     output: {
         path: path.resolve(__dirname, 'dist'),
-        filename: 'dh-gauged.js',
+        filename: 'dh-jotsu.js',
         globalObject: 'this',
     },
     module: {

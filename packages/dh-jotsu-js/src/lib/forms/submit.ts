@@ -6,7 +6,7 @@ import { formReset } from './reset';
 import { findErrorHolder, formDataAsJson, formRedirect, formTemplate, setErrorHolder } from 'utils';
 
 function formSuccess(form: HTMLFormElement, res: any) {
-    customEvent('gauged.form.submit.success', res);
+    customEvent('jotsu.form.submit.success', res);
 
     formReset(form);
     if (formRedirect(form)) {
@@ -23,7 +23,7 @@ function formError(event: SubmitEvent, form: HTMLFormElement, errorDetail: Error
     event.preventDefault();
     const errorHolder = findErrorHolder(form);
     setErrorHolder(errorHolder, errorDetail?.detail || 'Unknown network error.');
-    customEvent('gauged.form.submit.error', errorDetail);
+    customEvent('jotsu.form.submit.error', errorDetail);
 }
 
 export async function formSubmitHandler(event: SubmitEvent) {
@@ -35,7 +35,7 @@ export async function formSubmitHandler(event: SubmitEvent) {
             return false;
         }
     }
-    const canceled = !cancelableCustomEvent('gauged.form.submit', form);
+    const canceled = !cancelableCustomEvent('jotsu.form.submit', form);
     if (canceled) {
         return false;
     }

@@ -25,6 +25,6 @@ export function formResetHandler(event: Event) {
     if (form.hasAttribute('novalidate')) {
         formReset(form);
     }
-    customEvent('gauged.form.reset', form);
+    customEvent('jotsu.form.reset', form);
     return true;
 }

@@ -15,5 +15,5 @@ export function formHydrate(form: HTMLFormElement) {
 
     form.addEventListener('submit', formSubmitHandler);
     form.addEventListener('reset', formResetHandler);
-    customEvent('gauged.form.hydrate', form);
+    customEvent('jotsu.form.hydrate', form);
 }

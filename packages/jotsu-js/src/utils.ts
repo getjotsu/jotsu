@@ -12,7 +12,7 @@ export function buildUrlWithOffsetLimit(baseUrl: string, offset?: number, limit?
 }
 
 export function getDocumentAccountId(): string | undefined {
-    const meta = document.head.querySelector<HTMLMetaElement>('meta[name="gauged-account"]');
+    const meta = document.head.querySelector<HTMLMetaElement>('meta[name="jotsu-account"]');
     if (meta && meta.content) {
         return meta.content;
     }
@@ -34,7 +34,7 @@ export function getAccountIdFromElement(element: HTMLElement) {
     if (accountId) {
         return accountId;
     }
-    const error = `Your account number could not be found.  Please specify it via one of the following: a 'gauged-account' meta tag (preferred), the element 'data-account' attribute, the document body 'data-account' attribute or the 'account' query string.`;
+    const error = `Your account number could not be found.  Please specify it via one of the following: a 'jotsu-account' meta tag (preferred), the element 'data-account' attribute, the document body 'data-account' attribute or the 'account' query string.`;
     console.error(error);
     throw Error(error);
 }
