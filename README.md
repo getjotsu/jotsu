@@ -6,12 +6,12 @@ The Jotsu libraries are still in beta and changing frequently.
 
 Currently, here's what's supported:
 
-*Authentication and Authorization*
-Use Jotsu easily add authentication and authorization to your application.   
+**Authentication and Authorization**:
+Use Jotsu to add authentication and authorization to your application.   
 Full role-based access control and permission system.  No need for costly and complex auth0, cognito or DIY. 
 An easy-to-use admin UI is available at [my.jotsu.com](https://my.jotsu.com/login).
 
-*Forms*
+**Forms**:
 Easily add forms to your site for contact, registration and more.   Accessible and completely customizable.
 
 ## Packages
