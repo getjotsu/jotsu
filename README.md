@@ -42,8 +42,10 @@ npm install -D @jotsu/dh-jotsu-js
 
 Most likely, you'll want to use an existing CDN:
 ```shell
-
+https://unpkg.com/@jotsu/dh-jotsu-js@latest/dist/dh-jotsu.js
+https://cdn.jsdelivr.net/npm/@jotsu/dh-jotsu-js@latest/dist/dh-jotsu.js
 ```
+Note: Make sure you pin the version in production.
 
 ## Development
 Use lerna and npm to build.
