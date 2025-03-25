@@ -1,6 +1,6 @@
 {
   "name": "@jotsu/dh-jotsu-js",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "main": "dist/dh-jotsu.js",
   "scripts": {
     "build": "webpack --mode production",
@@ -8,7 +8,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "devDependencies": {
-    "@jotsu/jotsu-js": "^0.6.0",
+    "@jotsu/jotsu-js": "^0.7.0",
     "dotenv-webpack": "^8.1.0",
     "preact": "^10.24.0",
     "ts-loader": "^9.5.1",
