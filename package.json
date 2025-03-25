@@ -9,7 +9,8 @@
     "build": "npm run build:jotsu-js && npm run build:react-jotsu-js && npm run build:dh-jotsu-js",
     "build:jotsu-js": "cd packages/jotsu-js && npm run build",
     "build:react-jotsu-js": "cd packages/react-jotsu-js && npm run build",
-    "build:dh-jotsu-js": "cd packages/dh-jotsu-js && npm run build"
+    "build:dh-jotsu-js": "cd packages/dh-jotsu-js && npm run build",
+    "publish": "npm run build && lerna publish --no-private"
   },
   "license": "MIT",
   "private": true,
