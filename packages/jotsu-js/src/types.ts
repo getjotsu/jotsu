@@ -25,6 +25,7 @@ export type User = {
     account_id: string;
     account?: Account;
     roles?: Role[];
+    system?: boolean;
 };
 
 /* FIXME: rename to FormInstance to avoid conflict with <Form/> */
