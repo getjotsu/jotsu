@@ -8,6 +8,7 @@ export type Account = {
     name: string;
     created_at: string;
     onboarded_at: string | null;
+    owner_id: string | null;
 };
 
 export type Role = {
