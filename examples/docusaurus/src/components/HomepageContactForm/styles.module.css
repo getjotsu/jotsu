@@ -8,6 +8,10 @@
     flex-direction: column;
 }
 
+.form h2 {
+    text-align: center;
+}
+
 .form input[type='submit'], .form input[type='reset'] {
     cursor: pointer;
     border: none;
