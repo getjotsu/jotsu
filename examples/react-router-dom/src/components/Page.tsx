@@ -17,6 +17,9 @@ const Page = (props: PropsWithChildren) => {
     return (
         <>
             <header className={'header'}>
+                <div>
+                    <a href={'/'}>Example</a>
+                </div>
                 <StyleDropdown onChange={setValue} onLoad={onLoad} />
             </header>
             {loaded[value] ? <main>{props.children}</main> : null}
