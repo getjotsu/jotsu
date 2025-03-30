@@ -11,7 +11,7 @@ import {
     isA
 } from '@jotsu/jotsu-js';
 
-import Form from 'components/forms/Form';
+import BaseForm from 'components/forms/BaseForm';
 import FormHelp from 'components/forms/FormHelp';
 
 import { AuthFormProps } from 'types';
@@ -31,21 +31,43 @@ type RegisterFormData = Omit<RegisterData, 'email'> & {
     confirm_password: string;
 };
 
-const Register = (
-    props: {
-        message: React.JSX.Element | ((email: string) => React.JSX.Element);
-        onRegister?: (user: User) => void;
-        help?: {
-            email?: ReactNode;
-            password?: ReactNode;
-            confirmPassword?: ReactNode;
-        };
-        show?: RegisterShowOpts & Exclude<AuthFormProps['show'], undefined>;
-        passwordMinLength?: number
-    } & Omit<AuthFormProps, 'show'>
-) => {
+/**
+ * Props for the **\<Register/\>** component.
+ * @category auth
+ */
+export interface RegisterProps extends Omit<AuthFormProps, 'show'> {
+    /** Message show after the user successfully registers. */
+    message: React.JSX.Element | ((email: string) => React.JSX.Element);
+    /** Callback with the newly registered user. */
+    onRegister?: (user: User) => void;
+    /** Per-field help messages. */
+    help?: {
+        /** Help text for the 'email' field. */
+        email?: ReactNode;
+        /** Help text for the 'password' field. */
+        password?: ReactNode;
+        /** Help text for the password confirmation field. */
+        confirmPassword?: ReactNode;
+    };
+    /** Specify what option information to collect. */
+    show?: Exclude<AuthFormProps['show'], undefined> & {
+        /** Show the first and last names fields? */
+        firstLastName?: boolean
+    };
+    /** Minimum number of characters for a password.   Must be >= 8, default=12. */
+    passwordMinLength?: number
+}
+
+/**
+ * A fully functional registration form.
+ * @category auth
+ *
+ * @param props
+ * @returns {React.JSX.Element}
+ */
+const Register = (props: RegisterProps): React.JSX.Element => {
     const submitText = props.submitText ? props.submitText : 'Register';
-    const passwordMinLength = isA<number>(props.passwordMinLength) ? Math.floor(props.passwordMinLength) : 12;
+    const passwordMinLength = Math.max(isA<number>(props.passwordMinLength) ? Math.floor(props.passwordMinLength) : 12, 8);
 
     const {
         register,
@@ -98,7 +120,7 @@ const Register = (
     }
 
     return (
-        <Form
+        <BaseForm
             className={className}
             onSubmit={handleSubmit(onSubmit)}
             onReset={onReset}
@@ -156,7 +178,7 @@ const Register = (
             />
             <ButtonGroup disabled={busy} showReset={props.show?.reset} submitText={submitText} />
             {props.footer}
-        </Form>
+        </BaseForm>
     );
 };
 

@@ -6,7 +6,7 @@ import { login, getErrorDetail, redirectURI, type LoginResponse } from '@jotsu/j
 
 import type { AuthFormProps } from 'types';
 
-import Form from 'components/forms/Form';
+import BaseForm from 'components/forms/BaseForm';
 import ButtonGroup from 'components/auth/common/ButtonGroup';
 import FormHelp from 'components/forms/FormHelp';
 import LoginEmailFormGroup from './LoginEmailFormGroup';
@@ -18,11 +18,15 @@ type LoginFormRequest = {
     confirm_password: string;
 };
 
+/**
+ * Props for the **\<Login/\>** component.
+ * @category auth
+ */
 export interface LoginProps extends AuthFormProps {
-    /** callback after login success */
+    /** callback after login success. */
     onLogin?: (data: LoginResponse) => void;
 
-    /** Help text to display for individual fields on the form. */
+    /** Per-field help messages. */
     help?: {
         /** Help text for the email field. */
         email?: ReactNode;
@@ -36,7 +40,7 @@ export interface LoginProps extends AuthFormProps {
  * @category auth
  *
  * @param props
- * @returns {}
+ * @returns {React.JSX.Element}
  */
 const Login = (props: LoginProps): React.JSX.Element => {
     const submitText = props.submitText ? props.submitText : 'Login';
@@ -77,7 +81,7 @@ const Login = (props: LoginProps): React.JSX.Element => {
     };
 
     return (
-        <Form
+        <BaseForm
             className={className}
             onSubmit={handleSubmit(onSubmit)}
             unstyled={props.unstyled}
@@ -102,7 +106,7 @@ const Login = (props: LoginProps): React.JSX.Element => {
             />
             <ButtonGroup disabled={busy} showReset={props.show?.reset} submitText={submitText} />
             {props.footer}
-        </Form>
+        </BaseForm>
     );
 };
 

@@ -3,16 +3,19 @@
 import HelloWorld from './components/HelloWorld';
 import AccountDescription, {type AccountDescriptionProps} from './components/AccountDescription';
 
-import Register from './components/auth/register/Register';
+import Register, {type RegisterProps} from './components/auth/register/Register';
 import Login, {type LoginProps} from './components/auth/login/Login';
 import ForgotPassword from './components/auth/forgotPassword/ForgotPassword';
 import ResetPassword from './components/auth/resetPassword/ResetPassword';
 import ConfirmEmail from './components/auth/confirmEmail/ConfirmEmail';
 
+import Form, {type FormProps} from './components/forms/Form';
+
 export {
     HelloWorld,
     AccountDescription, AccountDescriptionProps,
-    Register,
+    Register, RegisterProps,
     Login, LoginProps,
-    ForgotPassword, ResetPassword, ConfirmEmail
+    ForgotPassword, ResetPassword, ConfirmEmail,
+    Form, FormProps,
 };

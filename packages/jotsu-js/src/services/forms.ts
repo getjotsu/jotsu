@@ -1,7 +1,7 @@
-import {API_URL, Client} from 'api';
-import type {ErrorDetail, Form} from 'types';
+import { API_URL, Client } from 'api';
+import type { ErrorDetail, FormInstance } from 'types';
 
-export async function formSubmit(accountId: string, form: HTMLFormElement) {
+export async function formSubmit(accountId: string, form: HTMLFormElement): Promise<FormInstance> {
     const url = `${API_URL}/${accountId}/services/forms`;
 
     const data = new FormData(form);
@@ -17,23 +17,23 @@ export async function formSubmit(accountId: string, form: HTMLFormElement) {
 
     const res = await fetch(url, {
         method: 'POST',
-        body: data
+        body: data,
     });
     if (res.status !== 200) {
-        throw await res.json() as ErrorDetail;
+        throw (await res.json()) as ErrorDetail;
     }
 
-    return await res.json();
+    return (await res.json()) as FormInstance;
 }
 
 export type FormsResponse = {
-    data: Form[];
-    total: number,
-    offset: number,
-    limit: number,
-}
+    data: FormInstance[];
+    total: number;
+    offset: number;
+    limit: number;
+};
 
-export async function fetchForms(apiClient: Client, options?: {offset?: number, limit?: number, name?: string}) {
+export async function fetchForms(apiClient: Client, options?: { offset?: number; limit?: number; name?: string }) {
     const url = apiClient.buildUrl('/services/forms', options?.offset, options?.limit);
     if (options?.name) {
         url.searchParams.set('name', options.name);
@@ -43,5 +43,5 @@ export async function fetchForms(apiClient: Client, options?: {offset?: number, 
 
 export async function fetchForm(apiClient: Client, formId: string) {
     const url = apiClient.buildUrl(`/services/forms/${formId}`);
-    return apiClient.get<Form>(url.toString());
+    return apiClient.get<FormInstance>(url.toString());
 }

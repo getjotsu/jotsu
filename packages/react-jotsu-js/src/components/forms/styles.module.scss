@@ -8,11 +8,11 @@
             margin-bottom: 1rem;
         }
 
-        .has-field-help input {
+        .has-field-help input, .error input {
             margin-bottom: .2rem;
         }
 
-        .error .field-help {
+        .error .field-help, label [aria-required] {
             color: $danger-red;
         }
     ;

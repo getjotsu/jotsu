@@ -1,0 +1,43 @@
+.section {
+    width: 400px;
+    margin: 1rem auto;
+}
+
+.form div {
+    display: flex;
+    flex-direction: column;
+}
+
+.form input[type='submit'], .form input[type='reset'] {
+    cursor: pointer;
+    border: none;
+    padding: .5em 1em;
+}
+
+.form input[type='submit'] {
+    cursor: pointer;
+    border: none;
+    color: white;
+    width: fit-content;
+    background-color: var(--ifm-color-primary);
+}
+
+.form input[type='submit']:hover {
+    background-color: var(--ifm-color-primary-lightest);
+}
+
+.form input[type='reset'] {
+    cursor: pointer;
+    border: none;
+    color: var(--ifm-color-primary);
+    background-color: transparent;
+}
+
+.form input[type='reset']:hover {
+   color: var(--ifm-color-primary-lightest);
+}
+
+.submitted {
+    text-align: center;
+    font-weight: bold;
+}

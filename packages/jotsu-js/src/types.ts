@@ -28,8 +28,7 @@ export type User = {
     system?: boolean;
 };
 
-/* FIXME: rename to FormInstance to avoid conflict with <Form/> */
-export type Form = {
+export type FormInstance = {
     id: string;
     name: string;
     ip_address: string;

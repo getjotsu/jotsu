@@ -6,7 +6,7 @@ import { getErrorDetail, resetPassword, type ResetPasswordData, getFirstQueryPar
 
 import type { AuthFormProps } from 'types';
 
-import Form from 'components/forms/Form';
+import BaseForm from 'components/forms/BaseForm';
 import ButtonGroup from 'components/auth/common/ButtonGroup';
 import FormHelp from 'components/forms/FormHelp';
 import ResetPasswordPasswordFormGroup from './ResetPasswordPasswordFormGroup';
@@ -85,7 +85,7 @@ const ResetPassword = (
     }
 
     return (
-        <Form
+        <BaseForm
             className={className}
             onSubmit={handleSubmit(onSubmit)}
             unstyled={props.unstyled}
@@ -120,7 +120,7 @@ const ResetPassword = (
             />
             <ButtonGroup disabled={busy} showReset={props.show?.reset} submitText={submitText} />
             {props.footer}
-        </Form>
+        </BaseForm>
     );
 };
 
