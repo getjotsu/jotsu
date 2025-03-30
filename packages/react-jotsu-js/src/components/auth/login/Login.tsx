@@ -18,15 +18,27 @@ type LoginFormRequest = {
     confirm_password: string;
 };
 
-const Login = (
-    props: {
-        onLogin?: (data: LoginResponse) => void;
-        help?: {
-            email?: ReactNode;
-            password?: ReactNode;
-        };
-    } & AuthFormProps,
-) => {
+export interface LoginProps extends AuthFormProps {
+    /** callback after login success */
+    onLogin?: (data: LoginResponse) => void;
+
+    /** Help text to display for individual fields on the form. */
+    help?: {
+        /** Help text for the email field. */
+        email?: ReactNode;
+        /** Help text for the password field. */
+        password?: ReactNode;
+    };
+}
+
+/**
+ * A fully functional login form.
+ * @category auth
+ *
+ * @param props
+ * @returns {}
+ */
+const Login = (props: LoginProps): React.JSX.Element => {
     const submitText = props.submitText ? props.submitText : 'Login';
 
     const {

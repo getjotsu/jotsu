@@ -64,6 +64,10 @@ export function isDefined(value: any): boolean {
     return !isUndefined(value);
 }
 
+export function isA<T>(value: any): value is T {
+    return typeof value !== 'undefined';
+}
+
 export function isString(s: any) {
     return typeof s === 'string' || s instanceof String;
 }

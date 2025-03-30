@@ -1,6 +1,11 @@
 import React from 'react';
 
-const HelloWorld = () => {
+/**
+ * A simple 'Hello World' component to test the library.
+ *
+ * @returns {React.JSX.Element}
+ */
+function HelloWorld(): React.JSX.Element {
     return (<strong>Hello World</strong>);
 }
 

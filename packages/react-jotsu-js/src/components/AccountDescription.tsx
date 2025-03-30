@@ -5,9 +5,19 @@ import {useShowErrorBoundary} from 'hooks/useShowErrorBoundary';
 import type {Account} from '@jotsu/jotsu-js';
 import {fetchAccount} from '@jotsu/jotsu-js';
 
-const AccountDescription = (props: {
-    account: string
-}) => {
+/** Props for the **\<AccountDescription/\>** component. */
+export interface AccountDescriptionProps {
+    /** Your Jotsu account id. */
+    account: string;
+}
+
+/**
+ * Display simple account information.
+ *
+ * @param props
+ * @returns {React.JSX.Element|null}
+ */
+const AccountDescription = (props: AccountDescriptionProps): React.JSX.Element|null => {
     const [account, setAccount] = useState<Account>();
     const {showBoundary} = useShowErrorBoundary();
 

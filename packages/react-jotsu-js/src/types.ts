@@ -1,23 +1,28 @@
-import React from 'react';
+import type { HTMLProps, ReactNode } from 'react';
 import type { UseFormReturn } from 'react-hook-form';
-import { Client } from '@jotsu/jotsu-js';
+import type { Client } from '@jotsu/jotsu-js';
 
-export type BaseProps = {
+export interface BaseProps {
     unstyled?: boolean;
-};
+}
 
-export type AuthFormProps = BaseProps & {
+export interface AuthFormProps extends BaseProps {
+    /** The Jotsu Client instance */
     apiClient: Client;
+    /** The text for the submit button. */
     submitText?: string;
-    header?: React.ReactNode;
-    footer?: React.ReactNode;
+    /** Header content for the form. */
+    header?: ReactNode;
+    /** Footer content for the form. */
+    footer?: ReactNode;
+    /** Show/hide controls. */
     show?: {
+        /** Include a reset button? */
         reset?: boolean;
     };
-};
+}
 
-export type AuthFormGroupProps = Partial<UseFormReturn> & {
-    autoComplete?: string;
+export type AuthFormGroupProps = Partial<UseFormReturn> & HTMLProps<HTMLInputElement> & {
     errors: UseFormReturn['formState']['errors'];
-    help?: React.ReactNode;
+    help?: ReactNode;
 };

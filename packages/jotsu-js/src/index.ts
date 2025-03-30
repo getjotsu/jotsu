@@ -16,5 +16,6 @@ export {
     isDefined,
     isError,
     isFunction,
+    isA,
     redirectURI,
 } from './utils';

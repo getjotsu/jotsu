@@ -8,6 +8,7 @@ const ConfirmEmailSuccess = (props: { user: User }) => (
         <p>
             You're all set! Your email address <strong>{props.user.email}</strong> is verified.
         </p>
+        <a href={'/login'}>Login</a>
     </section>
 );
 

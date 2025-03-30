@@ -2,7 +2,14 @@ import React, { ReactNode, useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import classNames from 'classnames';
 
-import { type User, type RegisterData, getErrorDetail, register as registerService, isFunction } from '@jotsu/jotsu-js';
+import {
+    type User,
+    type RegisterData,
+    getErrorDetail,
+    register as registerService,
+    isFunction,
+    isA
+} from '@jotsu/jotsu-js';
 
 import Form from 'components/forms/Form';
 import FormHelp from 'components/forms/FormHelp';
@@ -34,16 +41,18 @@ const Register = (
             confirmPassword?: ReactNode;
         };
         show?: RegisterShowOpts & Exclude<AuthFormProps['show'], undefined>;
-    } & Omit<AuthFormProps, 'show'>,
+        passwordMinLength?: number
+    } & Omit<AuthFormProps, 'show'>
 ) => {
     const submitText = props.submitText ? props.submitText : 'Register';
+    const passwordMinLength = isA<number>(props.passwordMinLength) ? Math.floor(props.passwordMinLength) : 12;
 
     const {
         register,
         handleSubmit,
         reset,
         watch,
-        formState: { errors },
+        formState: { errors }
     } = useForm<RegisterFormData>();
 
     const [busy, setBusy] = useState(false);
@@ -51,7 +60,7 @@ const Register = (
     const [successEmail, setSuccessEmail] = useState<string>('');
 
     const className = classNames('register-form', {
-        error: !!formError,
+        error: !!formError
     });
 
     const onReset = () => {
@@ -102,13 +111,13 @@ const Register = (
                 <>
                     <RegisterFirstNameFormGroup
                         {...register('first_name', {
-                            required: true,
+                            required: true
                         })}
                         errors={errors}
                     />
                     <RegisterLastNameFormGroup
                         {...register('last_name', {
-                            required: true,
+                            required: true
                         })}
                         errors={errors}
                     />
@@ -116,7 +125,7 @@ const Register = (
             )}
             <RegisterEmailFormGroup
                 {...register('username', {
-                    required: true,
+                    required: true
                 })}
                 errors={errors}
             />
@@ -124,11 +133,12 @@ const Register = (
                 {...register('password', {
                     required: true,
                     pattern: {
-                        value: /^(?=.*\d)(?=.*[!@#$%^&*.])(?=.*[a-z])(?=.*[A-Z]).{8,}$/,
+                        value: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{12,}$/,
                         message:
-                            'The password that must be at least eight (8) characters including upper and lower case letters, numbers and symbols like ! " ? $ % ^ &.',
-                    },
+                            `The password must be at least ${passwordMinLength} characters including upper and lower case letters, and numbers.`
+                    }
                 })}
+                minLength={passwordMinLength}
                 autoComplete={'new-password'}
                 errors={errors}
             />
@@ -139,7 +149,7 @@ const Register = (
                         if (watch('password') != val) {
                             return 'The passwords must match.';
                         }
-                    },
+                    }
                 })}
                 autoComplete={'new-password'}
                 errors={errors}
