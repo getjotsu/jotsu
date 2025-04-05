@@ -1,4 +1,4 @@
-import React, { type FormEvent, FormEventHandler, useRef } from 'react';
+import React, { type FormEvent, FormEventHandler, useRef, useState } from 'react';
 import { formSubmit, type FormInstance, type ErrorDetail } from '@jotsu/jotsu-js';
 
 import { BaseProps } from 'types';
@@ -11,6 +11,8 @@ export interface FormProps extends Omit<React.FormHTMLAttributes<HTMLFormElement
     onSubmitError?: (e: ErrorDetail) => void;
     handleSubmit: (onSubmit: () => void) => FormEventHandler<HTMLFormElement>;
 }
+
+const SubmitSuccess = () => (<div>Your form was successfully submitted.</div>);
 
 /**
  * Form component that handles submitting to the Jotsu API.
@@ -39,6 +41,7 @@ export interface FormProps extends Omit<React.FormHTMLAttributes<HTMLFormElement
  * @constructor
  */
 const Form = (props: FormProps) => {
+    const [submit, setSubmit] = useState(false);
     const ref = useRef<HTMLFormElement>(null);
 
     const { accountId, handleSubmit, onSubmitSuccess, onSubmitError, onReset: onResetProp, ...formProps } = props;
@@ -46,7 +49,11 @@ const Form = (props: FormProps) => {
     const onSubmit = async () => {
         try {
             const res = await formSubmit(props.accountId, ref.current!);
-            onSubmitSuccess?.(res);
+            if (onSubmitSuccess) {
+                onSubmitSuccess?.(res);
+            } else {
+                setSubmit(true);
+            }
         } catch (e) {
             onSubmitError?.(e as ErrorDetail);
         }
@@ -60,9 +67,7 @@ const Form = (props: FormProps) => {
         }
     };
 
-    return (
-        <BaseForm {...formProps} onSubmit={handleSubmit(onSubmit)} onReset={onReset} ref={ref} />
-    );
+    return submit ? <SubmitSuccess /> : <BaseForm {...formProps} onSubmit={handleSubmit(onSubmit)} onReset={onReset} ref={ref} />;
 };
 
 export default Form;
