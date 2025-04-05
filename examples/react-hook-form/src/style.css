@@ -1,0 +1,24 @@
+form {
+    max-width: 500px;
+    margin: 1rem auto;
+}
+
+form .form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: .5rem;
+}
+
+form .buttons {
+    display: flex;
+    gap: .5rem;
+}
+
+.success div {
+    text-align: center;
+}
+
+.success pre {
+    margin: 1rem auto;
+    width: fit-content;
+}
