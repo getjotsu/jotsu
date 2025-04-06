@@ -26,3 +26,5 @@ export type AuthFormGroupProps = Partial<UseFormReturn> & HTMLProps<HTMLInputEle
     errors: UseFormReturn['formState']['errors'];
     help?: ReactNode;
 };
+
+export type {Client, ErrorDetail, FormInstance} from '@jotsu/jotsu-js';

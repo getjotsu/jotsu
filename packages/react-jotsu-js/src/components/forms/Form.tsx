@@ -7,6 +7,7 @@ import BaseForm from './BaseForm';
 export interface FormProps extends Omit<React.FormHTMLAttributes<HTMLFormElement>, 'onSubmit'>, BaseProps {
     accountId: string,
     name: string,
+    onSubmitBegin?: () => void;
     onSubmitSuccess?: (formInstance: FormInstance) => void;
     onSubmitError?: (e: ErrorDetail) => void;
     handleSubmit: (onSubmit: () => void) => FormEventHandler<HTMLFormElement>;
@@ -44,9 +45,18 @@ const Form = (props: FormProps) => {
     const [submit, setSubmit] = useState(false);
     const ref = useRef<HTMLFormElement>(null);
 
-    const { accountId, handleSubmit, onSubmitSuccess, onSubmitError, onReset: onResetProp, ...formProps } = props;
+    const {
+        accountId,
+        handleSubmit,
+        onSubmitBegin,
+        onSubmitSuccess,
+        onSubmitError,
+        onReset: onResetProp,
+        ...formProps
+    } = props;
 
     const onSubmit = async () => {
+        onSubmitBegin?.();
         try {
             const res = await formSubmit(props.accountId, ref.current!);
             if (onSubmitSuccess) {
@@ -67,7 +77,8 @@ const Form = (props: FormProps) => {
         }
     };
 
-    return submit ? <SubmitSuccess /> : <BaseForm {...formProps} onSubmit={handleSubmit(onSubmit)} onReset={onReset} ref={ref} />;
+    return submit ? <SubmitSuccess /> :
+        <BaseForm {...formProps} onSubmit={handleSubmit(onSubmit)} onReset={onReset} ref={ref} />;
 };
 
 export default Form;
