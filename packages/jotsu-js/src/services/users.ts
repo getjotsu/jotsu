@@ -10,5 +10,6 @@ export async function fetchUsers(apiClient: Client, options?: { offset?: number;
 }
 
 export async function deleteUser(apiClient: Client, userId: string) {
-    return apiClient.delete<User>(`/${apiClient.accountId}/users/${userId}`);
+    const url = apiClient.buildUrl(`/users/${userId}`);
+    return apiClient.delete<User>(url.toString());
 }

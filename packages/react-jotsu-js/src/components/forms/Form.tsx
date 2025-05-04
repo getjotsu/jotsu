@@ -39,7 +39,6 @@ const SubmitSuccess = () => (<div>Your form was successfully submitted.</div>);
  * ```
  *
  * @param props
- * @constructor
  */
 const Form = (props: FormProps) => {
     const [submit, setSubmit] = useState(false);
