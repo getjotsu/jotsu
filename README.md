@@ -46,12 +46,3 @@ https://unpkg.com/@jotsu/dh-jotsu-js@latest/dist/dh-jotsu.js
 https://cdn.jsdelivr.net/npm/@jotsu/dh-jotsu-js@latest/dist/dh-jotsu.js
 ```
 Note: Make sure you pin the version in production.
-
-## Development
-Use lerna and npm to build.
-
-```shell
-npm install
-npm run build
-lerna publish --no-private
-```

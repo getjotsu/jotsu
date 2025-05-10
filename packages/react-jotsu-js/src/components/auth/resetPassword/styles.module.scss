@@ -1,0 +1,10 @@
+@use 'scss/variables';
+
+.validator {
+    :global {
+        .met {
+            list-style-type: '\2713\0020';
+            color: var(--primary-color)
+        }
+    }
+}

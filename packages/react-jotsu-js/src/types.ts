@@ -22,7 +22,7 @@ export interface AuthFormProps extends BaseProps {
     };
 }
 
-export type AuthFormGroupProps = Partial<UseFormReturn> & HTMLProps<HTMLInputElement> & {
+export type AuthFormGroupProps = BaseProps & Partial<UseFormReturn> & HTMLProps<HTMLInputElement> & {
     errors: UseFormReturn['formState']['errors'];
     help?: ReactNode;
 };

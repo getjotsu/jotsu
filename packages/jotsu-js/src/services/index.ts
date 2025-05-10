@@ -6,5 +6,5 @@ export { fetchMe } from './auth/me';
 export { login } from './auth/login';
 export { register } from './auth/register';
 export { forgotPassword } from './auth/forgotPassword';
-export { resetPassword } from './auth/resetPassword';
+export { resetPassword, verifyResetPasswordToken } from './auth/resetPassword';
 export { confirmEmail } from './auth/confirmEmail';

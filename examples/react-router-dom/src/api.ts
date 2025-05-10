@@ -1,5 +1,5 @@
 import { redirect } from 'react-router-dom';
-import { ErrorDetail, StorageClient } from '@jotsu/jotsu-js';
+import { type ErrorDetail, StorageClient } from '@jotsu/jotsu-js';
 
 class ApiClient extends StorageClient {
     public accountId: string = process.env.REACT_APP_ACCOUNT_ID;

@@ -1,8 +1,14 @@
-import React, { ReactNode, useState } from 'react';
+import React, { ReactNode, useEffect, useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import classNames from 'classnames';
 
-import { getErrorDetail, resetPassword, type ResetPasswordData, getFirstQueryParam } from '@jotsu/jotsu-js';
+import {
+    type ResetPasswordData,
+    getErrorDetail,
+    resetPassword,
+    getFirstQueryParam,
+    verifyResetPasswordToken
+} from '@jotsu/jotsu-js';
 
 import type { AuthFormProps } from 'types';
 
@@ -33,7 +39,7 @@ const ResetPassword = (
         help?: {
             email?: ReactNode;
         };
-    } & AuthFormProps,
+    } & AuthFormProps
 ) => {
     const token = getFirstQueryParam('t');
     const submitText = props.submitText ? props.submitText : 'Submit';
@@ -43,16 +49,36 @@ const ResetPassword = (
         handleSubmit,
         reset,
         watch,
-        formState: { errors },
+        setValue,
+        formState: { errors }
     } = useForm<ResetPasswordFormData>();
 
-    const [busy, setBusy] = useState(false);
+    const [busy, setBusy] = useState(true);
     const [formError, setFormError] = useState('');
     const [done, setDone] = useState(false);
 
     const className = classNames('login-form', {
-        error: !!formError,
+        error: !!formError
     });
+
+    useEffect(() => {
+        if (token) {
+            const getData = async () => {
+                return await verifyResetPasswordToken(props.apiClient, token);
+            };
+
+            getData()
+                .then((data) => {
+                    setValue('username', data.email);
+                    console.log('Set value: ', data.email)
+                })
+                .catch((e) => {
+                    console.log(e);
+                    setFormError('Your token is expired or invalid.  Please reset your password again.');
+                })
+                .finally(() => setBusy(false));
+        }
+    }, [token, setValue]);
 
     const onReset = () => {
         reset();
@@ -63,8 +89,9 @@ const ResetPassword = (
         try {
             setBusy(true);
             const res = await resetPassword(props.apiClient, {
+                username: data.username,
                 password: data.password,
-                token: token || '',
+                token: token || ''
             });
             setDone(true);
             props.onFinish?.(res.email);
@@ -94,14 +121,23 @@ const ResetPassword = (
         >
             {props.header}
             <FormHelp id={'reset-password-form-help'}>{formError}</FormHelp>
+
+            {/* Also include username in the form submission for Google Password Manager. */}
+            <input
+                style={{visibility: 'hidden'}}
+                {...register('username')}
+                autoComplete={'email'}
+                autoFocus={false}
+            />
+
             <ResetPasswordPasswordFormGroup
                 {...register('password', {
                     required: true,
                     pattern: {
                         value: /^(?=.*\d)(?=.*[!@#$%^&*.])(?=.*[a-z])(?=.*[A-Z]).{8,}$/,
                         message:
-                            'The password that must be at least eight (8) characters including upper and lower case letters, numbers and symbols like ! " ? $ % ^ &.',
-                    },
+                            'The password that must be at least eight (8) characters including upper and lower case letters, numbers and symbols like ! " ? $ % ^ &.'
+                    }
                 })}
                 autoComplete={'new-password'}
                 errors={errors}
@@ -113,7 +149,7 @@ const ResetPassword = (
                         if (watch('password') != val) {
                             return 'The passwords must match.';
                         }
-                    },
+                    }
                 })}
                 autoComplete={'new-password'}
                 errors={errors}
