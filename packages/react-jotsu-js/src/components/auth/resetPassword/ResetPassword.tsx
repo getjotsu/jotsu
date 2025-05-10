@@ -70,7 +70,6 @@ const ResetPassword = (
             getData()
                 .then((data) => {
                     setValue('username', data.email);
-                    console.log('Set value: ', data.email)
                 })
                 .catch((e) => {
                     console.log(e);
