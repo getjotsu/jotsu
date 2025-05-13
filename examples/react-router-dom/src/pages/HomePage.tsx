@@ -5,11 +5,10 @@ import { useNavigate } from 'react-router-dom';
 const HomePage = () => {
     const navigate = useNavigate();
 
-    const onClick = () => {
-        apiClient.logout();
+    const onClick = async () => {
+        await apiClient.logout();
         navigate('/login');
     };
-
     return (
         <Page>
             <section>

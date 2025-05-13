@@ -4,17 +4,10 @@ export { domReady } from './dom';
 export { fetchAccount } from './services';
 export { fetchUsers, deleteUser } from './services';
 export { fetchForms, fetchForm, formSubmit } from './services';
-export {
-    fetchMe,
-    login,
-    register,
-    forgotPassword,
-    resetPassword,
-    confirmEmail,
-    verifyResetPasswordToken,
-} from './services';
+export { fetchMe, register, forgotPassword, resetPassword, confirmEmail, verifyResetPasswordToken } from './services';
 
 export {
+    fullURL,
     getAccountIdFromElement,
     getDocumentAccountId,
     getErrorDetail,

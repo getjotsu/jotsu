@@ -1,30 +1,51 @@
 // noinspection JSUnusedGlobalSymbols
 
-import type { ErrorDetail } from 'types';
+import type { ErrorDetail, TokenResponse, User } from 'types';
+import { getCookie } from './utils';
 
 export const API_URL = window.process?.env?.API_URL ? window.process?.env.API_URL : 'https://api.jotsu.com';
 
 export class Client {
     public readonly base;
     public readonly accountId: string;
-    protected token: string | undefined;
+    public readonly bffPath: string;
 
-    constructor(accountId: string, options?: { token?: string; base?: string }) {
+    protected _accessToken: string | undefined;
+    protected _csrfToken: string | undefined;
+    protected _currentUser: User | undefined;
+    protected _loginUrl: string | undefined;
+
+    constructor(accountId: string, options?: { token?: string; base?: string; bffPath?: string; loginUrl?: string }) {
         this.base = options?.base ? options.base : API_URL;
+        this.bffPath = options?.bffPath ? options.bffPath : '/api/auth';
         this.accountId = accountId;
-        this.token = options?.token;
+        this._accessToken = options?.token;
+        this._loginUrl = options?.loginUrl;
     }
 
-    setToken(token: string | null | undefined) {
-        this.token = token ? token : undefined;
+    get loginUrl() {
+        return this._loginUrl;
     }
 
-    clearToken() {
-        this.setToken(undefined);
+    get loginAPIEndpoint() {
+        return `${this.base}/${this.accountId}/auth/login`;
     }
 
-    logout() {
-        this.clearToken();
+    get logoutAPIEndpoint() {
+        return `${this.base}/${this.accountId}/auth/logout`;
+    }
+
+    get currentUser(): User | undefined {
+        return this._currentUser;
+    }
+
+    get accessToken(): string | undefined {
+        return this._accessToken;
+    }
+
+    clearTokens() {
+        this._accessToken = undefined;
+        this._csrfToken = undefined;
     }
 
     buildUrl(path: string, offset?: number, limit?: number): URL {
@@ -40,21 +61,122 @@ export class Client {
         return url;
     }
 
-    async request<T>(method: string, url: string, data?: any, options?: { token?: string }): Promise<T> {
-        url = url.startsWith('/') ? `${this.base}/${this.accountId}${url}` : url;
-        method = method.toUpperCase();
-        const token = this.token ? this.token : options?.token;
-
-        const headers = {} as Record<string, string>;
-        if (token) {
-            headers['Authorization'] = `Bearer ${token}`;
+    async getCSRFToken(): Promise<string> {
+        if (this._csrfToken) {
+            return this._csrfToken;
         }
 
+        // This will only work if the customer's webserver proxies it.
+        const cookie = getCookie('csrf_token');
+        if (cookie) {
+            return cookie;
+        }
+
+        const url = `${this.bffPath}/csrf_token`;
+        const res = await fetch(url, {
+            credentials: 'include',
+            headers: {
+                Authorization: `Bearer ${this._accessToken}`,
+            },
+        });
+        const data = await res.json();
+        this._csrfToken = data.csrf_token;
+        return this._csrfToken as string;
+    }
+
+    async refreshAccessToken(): Promise<TokenResponse | null> {
+        const csrf_token = await this.getCSRFToken();
+
+        const url = `${this.bffPath}/refresh`;
+        try {
+            const res = await fetch(url, {
+                method: 'POST',
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-Token': csrf_token,
+                },
+            });
+            const data = (await res.json()) as TokenResponse;
+
+            this._currentUser = data.user;
+            this._accessToken = data.token.access_token;
+            this._csrfToken = data.csrf_token;
+
+            return data;
+        } catch (_) {}
+        return null;
+    }
+
+    async login(username: string, password: string) {
+        const formData = new FormData();
+        formData.append('username', username);
+        formData.append('password', password);
+
+        const res = await fetch(`${this.bffPath}/login`, {
+            method: 'POST',
+            credentials: 'include',
+            body: formData,
+        });
+
+        if (res.status >= 300) {
+            const detail = (await res.json()) as ErrorDetail;
+            detail.res = res;
+            throw detail;
+        }
+
+        const loginResponse = (await res.json()) as TokenResponse;
+        this._accessToken = loginResponse.token.access_token;
+        this._csrfToken = loginResponse.csrf_token;
+        return loginResponse;
+    }
+
+    async logout() {
+        const formData = new FormData();
+        if (this._accessToken) {
+            formData.append('access_token', this._accessToken);
+        }
+
+        await fetch(`${this.bffPath}/logout`, {
+            method: 'POST',
+            credentials: 'include',
+            body: formData,
+        });
+        this.clearTokens();
+    }
+
+    async fetchWithAuth(input: RequestInfo, init?: RequestInit, retry = true): Promise<Response> {
+        const authHeaders = this._accessToken ? { Authorization: `Bearer ${this._accessToken}` } : undefined;
+        const response = await fetch(input, {
+            ...init,
+            headers: {
+                ...init?.headers,
+                ...authHeaders,
+            },
+        });
+
+        if (response.status === 401 && retry) {
+            const refreshedAccessToken = await this.refreshAccessToken();
+
+            if (refreshedAccessToken) {
+                return this.fetchWithAuth(input, init, false); // retry once
+            } else if (this._loginUrl) {
+                window.location.href = this._loginUrl;
+            }
+        }
+        return response;
+    }
+
+    async request<T>(method: string, url: string, data?: any): Promise<T> {
+        url = url.startsWith('/') ? `${this.base}/${this.accountId}${url}` : url;
+        method = method.toUpperCase();
+
+        const headers = {} as Record<string, string>;
         if (!['GET', 'DELETE'].includes(method)) {
             headers['Content-Type'] = 'application/json';
         }
 
-        const res = await fetch(url, {
+        const res = await this.fetchWithAuth(url, {
             method,
             headers,
             body: data ? JSON.stringify(data) : undefined,
@@ -95,12 +217,18 @@ export class StorageClient extends Client {
         this.key = key;
     }
 
-    setToken(token: string | undefined) {
-        if (token) {
-            window.sessionStorage.setItem(this.key, token);
+    async refreshAccessToken(): Promise<TokenResponse | null> {
+        const res = await super.refreshAccessToken();
+        if (res?.token.access_token) {
+            window.sessionStorage.setItem(this.key, res?.token.access_token);
         } else {
             window.sessionStorage.removeItem(this.key);
         }
-        super.setToken(token);
+        return res;
+    }
+
+    clearTokens() {
+        super.clearTokens();
+        window.sessionStorage.removeItem(this.key);
     }
 }

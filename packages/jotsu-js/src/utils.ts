@@ -93,13 +93,22 @@ export function getErrorDetail(e: any): string {
     return isString(error) ? error.toString() : JSON.stringify(error);
 }
 
+export function fullURL(url: string) {
+    return new URL(url, window.location.href).href;
+}
+
 export function redirectURI() {
     const params = new URLSearchParams(document.location.search);
     const location = params.get('redirect_uri');
-    return location ? location : '/';
+    return fullURL(location || '/');
 }
 
 export function getFirstQueryParam(name: string) {
     const urlParams = new URLSearchParams(window.location.search);
     return urlParams.get(name);
+}
+
+export function getCookie(name: string) {
+    const value = document.cookie.split('; ').find((row) => row.startsWith(name + '='));
+    return value ? decodeURIComponent(value.split('=')[1]) : null;
 }

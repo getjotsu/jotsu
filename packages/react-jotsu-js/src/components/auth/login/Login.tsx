@@ -2,7 +2,7 @@ import React, { ReactNode, useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import classNames from 'classnames';
 
-import { login, getErrorDetail, redirectURI, type LoginResponse } from '@jotsu/jotsu-js';
+import { getErrorDetail, redirectURI, type TokenResponse } from '@jotsu/jotsu-js';
 
 import type { AuthFormProps } from 'types';
 
@@ -24,7 +24,7 @@ type LoginFormRequest = {
  */
 export interface LoginProps extends AuthFormProps {
     /** callback after login success. */
-    onLogin?: (data: LoginResponse) => void;
+    onLogin?: (data: TokenResponse) => void;
 
     /** Per-field help messages. */
     help?: {
@@ -64,10 +64,11 @@ const Login = (props: LoginProps): React.JSX.Element => {
         setFormError('');
     };
 
+
     const onSubmit: SubmitHandler<LoginFormRequest> = async (data) => {
         try {
             setBusy(true);
-            const res = await login(props.apiClient, data.username, data.password);
+            const res = await props.apiClient.login(data.username, data.password);
             if (props.onLogin) {
                 props.onLogin(res);
             } else {
@@ -87,6 +88,8 @@ const Login = (props: LoginProps): React.JSX.Element => {
             unstyled={props.unstyled}
             onReset={onReset}
             aria-describedby={'login-form-help'}
+            method={'POST'}
+            action={props.apiClient.loginAPIEndpoint}
         >
             {props.header}
             <FormHelp id={'login-form-help'}>{formError}</FormHelp>

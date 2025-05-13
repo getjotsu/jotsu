@@ -1,6 +1,6 @@
 export type ErrorDetail = {
     detail: string;
-    res: Response;
+    res: Response | null;
 };
 
 export type Account = {
@@ -46,4 +46,10 @@ export type FormInstance = {
 export type AuthToken = {
     access_token: string;
     token_type: 'bearer';
+};
+
+export type TokenResponse = {
+    token: AuthToken;
+    user: User;
+    csrf_token: string;
 };
