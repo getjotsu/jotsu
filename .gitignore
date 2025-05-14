@@ -1,5 +1,6 @@
 /venv
 /.idea
+/.wrangler
 /*.iml
 /out
 __pycache__
