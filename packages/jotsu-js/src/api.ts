@@ -44,6 +44,7 @@ export class Client {
     }
 
     clearTokens() {
+        this._currentUser = undefined;
         this._accessToken = undefined;
         this._csrfToken = undefined;
     }
@@ -230,5 +231,16 @@ export class StorageClient extends Client {
     clearTokens() {
         super.clearTokens();
         window.sessionStorage.removeItem(this.key);
+    }
+
+    async login(username: string, password: string) {
+        const res = await super.login(username, password);
+        window.sessionStorage.setItem(this.key, res?.token.access_token);
+        return res;
+    }
+
+    async logout() {
+        window.sessionStorage.removeItem(this.key);
+        return super.logout();
     }
 }
