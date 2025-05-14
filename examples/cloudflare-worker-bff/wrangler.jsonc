@@ -19,5 +19,8 @@
 			"pattern": "my.jotsu.com/api/*",
 			"zone_name": "jotsu.com"
 		}
-	]
+	],
+	"vars": {
+		"JOTSU_ACCOUNT_ID": "1"
+	}
 }
