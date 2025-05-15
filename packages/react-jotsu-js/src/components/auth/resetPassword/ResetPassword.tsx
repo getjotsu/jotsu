@@ -13,10 +13,11 @@ import {
 import type { AuthFormProps } from 'types';
 
 import BaseForm from 'components/forms/BaseForm';
-import ButtonGroup from 'components/auth/common/ButtonGroup';
 import FormHelp from 'components/forms/FormHelp';
-import ResetPasswordPasswordFormGroup from './ResetPasswordPasswordFormGroup';
-import ResetPasswordConfirmPasswordFormGroup from './ResetPasswordConfirmPasswordFormGroup';
+import ButtonGroup from 'components/auth/common/ButtonGroup';
+import PasswordFormGroup from 'components/auth/common/PasswordFormGroup';
+import ConfirmPasswordFormGroup from 'components/auth/common/ConfirmPasswordFormGroup';
+import PasswordValidator from 'components/auth/common/PasswordValidator';
 
 type ResetPasswordFormData = ResetPasswordData & {
     confirm_password: string;
@@ -129,19 +130,19 @@ const ResetPassword = (
                 autoFocus={false}
             />
 
-            <ResetPasswordPasswordFormGroup
+            <PasswordFormGroup
                 {...register('password', {
                     required: true,
-                    pattern: {
-                        value: /^(?=.*\d)(?=.*[!@#$%^&*.])(?=.*[a-z])(?=.*[A-Z]).{8,}$/,
-                        message:
-                            'The password that must be at least eight (8) characters including upper and lower case letters, numbers and symbols like ! " ? $ % ^ &.'
+                    validate: (val: string) => {
+                        if (!PasswordValidator.isValid(val)) {
+                            return 'The password is not sufficiently complex.'
+                        }
                     }
                 })}
                 autoComplete={'new-password'}
                 errors={errors}
             />
-            <ResetPasswordConfirmPasswordFormGroup
+            <ConfirmPasswordFormGroup
                 {...register('confirm_password', {
                     required: true,
                     validate: (val: string) => {

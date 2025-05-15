@@ -1,6 +1,7 @@
 import React, { CSSProperties } from 'react';
-import styles from './styles.module.scss';
+import styles from '../resetPassword/styles.module.scss';
 
+export const PASSWORD_MIN_LENGTH = 12;
 
 const validate = (value: string, length: number) => {
     return {
@@ -23,19 +24,23 @@ const score = (status: { [key: string]: boolean }) => {
     return n;
 };
 
-const isValid = (value: string, length: number) => {
+const isValid = (value: string, length: number|undefined = undefined) => {
+    length = length ? length : PASSWORD_MIN_LENGTH;
+
     const status = validate(value, length);
     return score(status) >= 3 && status['length'] && status['noTriple'];
 };
 
-const ResetPasswordValidator = (props: {
+const PasswordValidator = (props: {
     className?: string
     style?: CSSProperties;
     unstyled?: boolean
     password: string;
-    length: number,
+    length?: number,
 }) => {
-    const status = validate(props.password, props.length);
+    const length = props.length ? props.length : PASSWORD_MIN_LENGTH
+
+    const status = validate(props.password, length);
     const n = score(status);
 
     const className = (key: string) => (status[key] ? 'met' : 'unmet');
@@ -63,6 +68,6 @@ const ResetPasswordValidator = (props: {
     );
 };
 
-ResetPasswordValidator.isValid = isValid;
+PasswordValidator.isValid = isValid;
 
-export default ResetPasswordValidator;
+export default PasswordValidator;

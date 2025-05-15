@@ -7,8 +7,7 @@ import {
     type RegisterData,
     getErrorDetail,
     register as registerService,
-    isFunction,
-    isA
+    isFunction
 } from '@jotsu/jotsu-js';
 
 import BaseForm from 'components/forms/BaseForm';
@@ -18,12 +17,12 @@ import { AuthFormProps } from 'types';
 import ButtonGroup from 'components/auth/common/ButtonGroup';
 
 import RegisterEmailFormGroup from './RegisterEmailFormGroup';
-import RegisterPasswordFormGroup from './RegisterPasswordFormGroup';
-import RegisterConfirmPasswordFormGroup from './RegisterConfirmPasswordFormGroup';
 import RegisterFirstNameFormGroup from './RegisterFirstNameFormGroup';
 import RegisterLastNameFormGroup from './RegisterLastNameFormGroup';
 
-type RegisterShowOpts = { firstLastName?: boolean };
+import PasswordFormGroup from 'components/auth/common/PasswordFormGroup';
+import PasswordValidator from 'components/auth/common/PasswordValidator';
+import ConfirmPasswordFormGroup from 'components/auth/common/ConfirmPasswordFormGroup';
 
 // Autocomplete wants the field to be named 'username'.
 type RegisterFormData = Omit<RegisterData, 'email'> & {
@@ -67,7 +66,6 @@ export interface RegisterProps extends Omit<AuthFormProps, 'show'> {
  */
 const Register = (props: RegisterProps): React.JSX.Element => {
     const submitText = props.submitText ? props.submitText : 'Register';
-    const passwordMinLength = Math.max(isA<number>(props.passwordMinLength) ? Math.floor(props.passwordMinLength) : 12, 8);
 
     const {
         register,
@@ -151,20 +149,19 @@ const Register = (props: RegisterProps): React.JSX.Element => {
                 })}
                 errors={errors}
             />
-            <RegisterPasswordFormGroup
+            <PasswordFormGroup
                 {...register('password', {
                     required: true,
-                    pattern: {
-                        value: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{12,}$/,
-                        message:
-                            `The password must be at least ${passwordMinLength} characters including upper and lower case letters, and numbers.`
+                    validate: (val: string) => {
+                        if (!PasswordValidator.isValid(val)) {
+                            return 'The password is not sufficiently complex.'
+                        }
                     }
                 })}
-                minLength={passwordMinLength}
                 autoComplete={'new-password'}
                 errors={errors}
             />
-            <RegisterConfirmPasswordFormGroup
+            <ConfirmPasswordFormGroup
                 {...register('confirm_password', {
                     required: true,
                     validate: (val: string) => {
