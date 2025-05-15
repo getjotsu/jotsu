@@ -1,6 +1,6 @@
 {
   "name": "@jotsu/jotsu-js",
-  "version": "0.12.1",
+  "version": "0.13.0",
   "main": "dist/jotsu.js",
   "types": "dist/jotsu.d.ts",
   "scripts": {
