@@ -99,6 +99,7 @@ const Login = (props: LoginProps): React.JSX.Element => {
                     required: true,
                 })}
                 errors={errors}
+                required
             />
             <LoginPasswordFormGroup
                 help={props.help?.password}
