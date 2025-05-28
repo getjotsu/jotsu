@@ -1,6 +1,6 @@
 {
   "name": "@jotsu/react-jotsu-js",
-  "version": "0.14.7",
+  "version": "0.14.8",
   "module": "dist/index.js",
   "types": "dist/react-jotsu-js.d.ts",
   "scripts": {
