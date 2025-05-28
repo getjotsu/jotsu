@@ -7,9 +7,10 @@ export const API_URL = window.process?.env?.API_URL ? window.process?.env.API_UR
 
 export class Client {
     public readonly base;
-    public readonly accountId: string;
-    public readonly bffPath: string;
 
+    /* Use protected variables and getters so that derived classes can access. */
+    protected _accountId: string;
+    protected _bffPath: string;
     protected _accessToken: string | undefined;
     protected _csrfToken: string | undefined;
     protected _currentUser: User | undefined;
@@ -17,10 +18,18 @@ export class Client {
 
     constructor(accountId: string, options?: { token?: string; base?: string; bffPath?: string; loginUrl?: string }) {
         this.base = options?.base ? options.base : API_URL;
-        this.bffPath = options?.bffPath ? options.bffPath : '/api/auth';
-        this.accountId = accountId;
+        this._bffPath = options?.bffPath ? options.bffPath : '/api/auth';
+        this._accountId = accountId;
         this._accessToken = options?.token;
         this._loginUrl = options?.loginUrl;
+    }
+
+    get accountId() {
+        return this._accountId;
+    }
+
+    get bffPath() {
+        return this._bffPath;
     }
 
     get loginUrl() {
