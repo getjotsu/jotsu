@@ -13,34 +13,39 @@ export type FormGroupProps = {
     help?: ReactNode;
     errors: FieldErrors;
 
-    id?: string;
+    className?: string;
+    htmlFor?: string | undefined;
     name?: string;
     required?: boolean;
 
     children?: ReactNode;
 };
 
-const FormGroup = React.forwardRef<HTMLInputElement, FormGroupProps>((props, ref) => {
-    const error = props.id ? props.errors[props.id] : undefined;
+const FormGroup = (props: FormGroupProps) => {
+    const error = props.name ? props.errors[props.name] : undefined;
     const fieldHelp = error ? fieldError(error) : props.help;
 
-    const className = classNames('form-group', {
-        [`form-group-${kebabCase(props.name || '')}`]: props.name,
-        [styles.formGroup]: !props.unstyled,
-        required: !!props.required,
-        error: !!error,
-        'has-field-help': !!fieldHelp,
-    });
+    const className = classNames(
+        'form-group',
+        {
+            [`form-group-${kebabCase(props.name || '')}`]: props.name,
+            [styles.formGroup]: !props.unstyled,
+            required: !!props.required,
+            error: !!error,
+            'has-field-help': !!fieldHelp,
+        },
+        props.className,
+    );
 
     return (
         <div className={className}>
-            <label className={'field-label'} htmlFor={props.id}>
+            <label className={'field-label'} htmlFor={props.htmlFor}>
                 {props.label}
             </label>
             {props.children}
             <FieldHelp role={error ? 'alert' : undefined}>{error ? fieldError(error) : props.help}</FieldHelp>
         </div>
     );
-});
+};
 
 export default FormGroup;

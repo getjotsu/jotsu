@@ -6,10 +6,10 @@ type InputFormGroupProps = React.InputHTMLAttributes<HTMLInputElement> & Omit<Fo
 
 const InputFormGroup = React.forwardRef<HTMLInputElement, InputFormGroupProps>((props, ref) => {
     const { unstyled, label, help, errors, ...inputProps } = props;
-    const error = props.id ? errors[props.id] : undefined;
+    const error = props.name ? errors[props.name] : undefined;
 
     return (
-        <FormGroup unstyled={unstyled} label={label} help={help} errors={errors}>
+        <FormGroup name={props.name} htmlFor={props.id} unstyled={unstyled} label={label} help={help} errors={errors}>
             <input {...inputProps} aria-invalid={!!error} formNoValidate ref={ref} />
         </FormGroup>
     );
