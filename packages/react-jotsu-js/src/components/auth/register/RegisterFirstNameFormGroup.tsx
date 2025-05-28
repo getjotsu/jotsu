@@ -1,10 +1,10 @@
 import React from 'react';
-import FormGroup from 'components/forms/FormGroup';
+import InputFormGroup from 'components/forms/InputFormGroup';
 import { AuthFormGroupProps } from 'types';
 
 const RegisterFirstNameFormGroup = React.forwardRef<HTMLInputElement, AuthFormGroupProps>((props, ref) => {
     return (
-        <FormGroup
+        <InputFormGroup
             id={'first_name'}
             type={'text'}
             label={'First Name'}

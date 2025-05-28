@@ -1,10 +1,10 @@
 import React from 'react';
-import FormGroup from 'components/forms/FormGroup';
+import InputFormGroup from 'components/forms/InputFormGroup';
 import { AuthFormGroupProps } from 'types';
 
 const LoginPasswordFormGroup = React.forwardRef<HTMLInputElement, AuthFormGroupProps>((props, ref) => {
     return (
-        <FormGroup
+        <InputFormGroup
             id={'password'}
             type={'password'}
             label={'Password'}

@@ -10,7 +10,7 @@ import ResetPassword from './components/auth/resetPassword/ResetPassword';
 import ConfirmEmail from './components/auth/confirmEmail/ConfirmEmail';
 
 import Form, { type FormProps } from './components/forms/Form';
-import FormGroup from './components/forms/FormGroup';
+import FormGroup, { type FormGroupProps } from './components/forms/FormGroup';
 
 export {
     HelloWorld,
@@ -26,4 +26,5 @@ export {
     Form,
     FormGroup,
     FormProps,
+    FormGroupProps,
 };

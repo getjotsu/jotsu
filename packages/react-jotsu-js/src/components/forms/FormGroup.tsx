@@ -7,16 +7,21 @@ import styles from './styles.module.scss';
 import FieldHelp from './FieldHelp';
 import { fieldError } from './utils';
 
-type FormGroupProps = React.InputHTMLAttributes<HTMLInputElement> & {
+export type FormGroupProps = {
     unstyled?: boolean;
     label: string;
     help?: ReactNode;
     errors: FieldErrors;
+
+    id?: string;
+    name?: string;
+    required?: boolean;
+
+    children?: ReactNode;
 };
 
 const FormGroup = React.forwardRef<HTMLInputElement, FormGroupProps>((props, ref) => {
-    const { errors, ...inputProps } = props;
-    const error = props.id ? errors[props.id] : undefined;
+    const error = props.id ? props.errors[props.id] : undefined;
     const fieldHelp = error ? fieldError(error) : props.help;
 
     const className = classNames('form-group', {
@@ -32,7 +37,7 @@ const FormGroup = React.forwardRef<HTMLInputElement, FormGroupProps>((props, ref
             <label className={'field-label'} htmlFor={props.id}>
                 {props.label}
             </label>
-            <input {...inputProps} aria-invalid={!!error} formNoValidate ref={ref} />
+            {props.children}
             <FieldHelp role={error ? 'alert' : undefined}>{error ? fieldError(error) : props.help}</FieldHelp>
         </div>
     );

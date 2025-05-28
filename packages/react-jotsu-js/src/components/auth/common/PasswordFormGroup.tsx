@@ -1,5 +1,5 @@
 import React, { ChangeEvent, useState } from 'react';
-import FormGroup from 'components/forms/FormGroup';
+import InputFormGroup from 'components/forms/InputFormGroup';
 import PasswordValidator from 'components/auth/common/PasswordValidator';
 import { AuthFormGroupProps } from 'types';
 
@@ -10,11 +10,11 @@ const PasswordFormGroup = React.forwardRef<HTMLInputElement, AuthFormGroupProps>
     const onChange = (event: ChangeEvent<HTMLInputElement>) => {
         setPassword(event.target.value);
         props.onChange?.(event);
-    }
+    };
 
     return (
         <>
-            <FormGroup
+            <InputFormGroup
                 id={'password'}
                 type={'password'}
                 label={'Password'}
