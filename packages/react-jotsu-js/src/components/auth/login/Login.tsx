@@ -1,11 +1,12 @@
 import React, { ReactNode, useState } from 'react';
-import { useForm, SubmitHandler } from 'react-hook-form';
+import { SubmitHandler } from 'react-hook-form';
 import classNames from 'classnames';
 
 import { getErrorDetail, redirectURI, type TokenResponse } from '@jotsu/jotsu-js';
 
 import type { AuthFormProps } from 'types';
 
+import { usePropsForm } from 'hooks/usePropsForm';
 import BaseForm from 'components/forms/BaseForm';
 import ButtonGroup from 'components/auth/common/ButtonGroup';
 import FormHelp from 'components/forms/FormHelp';
@@ -50,7 +51,7 @@ const Login = (props: LoginProps): React.JSX.Element => {
         handleSubmit,
         reset,
         formState: { errors },
-    } = useForm<LoginFormRequest>();
+    } = usePropsForm<LoginFormRequest>(props.form);
 
     const [busy, setBusy] = useState(false);
     const [formError, setFormError] = useState('');

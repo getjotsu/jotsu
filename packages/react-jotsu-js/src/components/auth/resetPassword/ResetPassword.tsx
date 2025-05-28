@@ -1,5 +1,5 @@
 import React, { ReactNode, useEffect, useState } from 'react';
-import { useForm, SubmitHandler } from 'react-hook-form';
+import { SubmitHandler } from 'react-hook-form';
 import classNames from 'classnames';
 
 import {
@@ -7,11 +7,12 @@ import {
     getErrorDetail,
     resetPassword,
     getFirstQueryParam,
-    verifyResetPasswordToken
+    verifyResetPasswordToken,
 } from '@jotsu/jotsu-js';
 
 import type { AuthFormProps } from 'types';
 
+import { usePropsForm } from 'hooks/usePropsForm';
 import BaseForm from 'components/forms/BaseForm';
 import FormHelp from 'components/forms/FormHelp';
 import ButtonGroup from 'components/auth/common/ButtonGroup';
@@ -40,7 +41,7 @@ const ResetPassword = (
         help?: {
             email?: ReactNode;
         };
-    } & AuthFormProps
+    } & AuthFormProps,
 ) => {
     const token = getFirstQueryParam('t');
     const submitText = props.submitText ? props.submitText : 'Submit';
@@ -51,15 +52,15 @@ const ResetPassword = (
         reset,
         watch,
         setValue,
-        formState: { errors }
-    } = useForm<ResetPasswordFormData>();
+        formState: { errors },
+    } = usePropsForm<ResetPasswordFormData>(props.form);
 
     const [busy, setBusy] = useState(true);
     const [formError, setFormError] = useState('');
     const [done, setDone] = useState(false);
 
     const className = classNames('login-form', {
-        error: !!formError
+        error: !!formError,
     });
 
     useEffect(() => {
@@ -91,7 +92,7 @@ const ResetPassword = (
             const res = await resetPassword(props.apiClient, {
                 username: data.username,
                 password: data.password,
-                token: token || ''
+                token: token || '',
             });
             setDone(true);
             props.onFinish?.(res.email);
@@ -124,7 +125,7 @@ const ResetPassword = (
 
             {/* Also include username in the form submission for Google Password Manager. */}
             <input
-                style={{visibility: 'hidden'}}
+                style={{ visibility: 'hidden' }}
                 {...register('username')}
                 autoComplete={'email'}
                 autoFocus={false}
@@ -135,9 +136,9 @@ const ResetPassword = (
                     required: true,
                     validate: (val: string) => {
                         if (!PasswordValidator.isValid(val)) {
-                            return 'The password is not sufficiently complex.'
+                            return 'The password is not sufficiently complex.';
                         }
-                    }
+                    },
                 })}
                 autoComplete={'new-password'}
                 errors={errors}
@@ -149,7 +150,7 @@ const ResetPassword = (
                         if (watch('password') != val) {
                             return 'The passwords must match.';
                         }
-                    }
+                    },
                 })}
                 autoComplete={'new-password'}
                 errors={errors}

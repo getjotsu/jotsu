@@ -1,9 +1,10 @@
 import React, { ReactNode, useState } from 'react';
-import { useForm, SubmitHandler } from 'react-hook-form';
+import { SubmitHandler } from 'react-hook-form';
 import classNames from 'classnames';
 
 import { type User, type RegisterData, getErrorDetail, register as registerService, isFunction } from '@jotsu/jotsu-js';
 
+import { usePropsForm } from 'hooks/usePropsForm';
 import BaseForm from 'components/forms/BaseForm';
 import FormHelp from 'components/forms/FormHelp';
 
@@ -67,7 +68,7 @@ const Register = (props: RegisterProps): React.JSX.Element => {
         reset,
         watch,
         formState: { errors },
-    } = useForm<RegisterFormData>();
+    } = usePropsForm<RegisterFormData>(props.form);
 
     const [busy, setBusy] = useState(false);
     const [formError, setFormError] = useState('');

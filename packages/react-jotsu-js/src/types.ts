@@ -9,6 +9,9 @@ export interface BaseProps {
 export interface AuthFormProps extends BaseProps {
     /** The Jotsu Client instance */
     apiClient: Client;
+    /** Optional form instance to use from 'react-hook-form' */
+    form: UseFormReturn<any>;
+
     /** The text for the submit button. */
     submitText?: string;
     /** Header content for the form. */

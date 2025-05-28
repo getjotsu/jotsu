@@ -1,11 +1,12 @@
 import React, { ReactNode, useState } from 'react';
-import { useForm, SubmitHandler } from 'react-hook-form';
+import { SubmitHandler } from 'react-hook-form';
 import classNames from 'classnames';
 
 import { getErrorDetail, forgotPassword, isFunction, type ForgotPasswordData } from '@jotsu/jotsu-js';
 
 import type { AuthFormProps } from 'types';
 
+import { usePropsForm } from 'hooks/usePropsForm';
 import BaseForm from 'components/forms/BaseForm';
 import ButtonGroup from 'components/auth/common/ButtonGroup';
 import FormHelp from 'components/forms/FormHelp';
@@ -46,7 +47,7 @@ const ForgotPassword = (
         handleSubmit,
         reset,
         formState: { errors },
-    } = useForm<ForgotPasswordData>();
+    } = usePropsForm<ForgotPasswordData>(props.form);
 
     const [busy, setBusy] = useState(false);
     const [formError, setFormError] = useState('');
