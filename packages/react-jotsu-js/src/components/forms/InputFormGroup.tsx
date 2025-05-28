@@ -13,7 +13,6 @@ const InputFormGroup = React.forwardRef<HTMLInputElement, InputFormGroupProps>((
     return (
         <FormGroup unstyled={unstyled} label={label} help={help} errors={errors}>
             <input {...inputProps} aria-invalid={!!error} formNoValidate ref={ref} />
-            <FieldHelp role={error ? 'alert' : undefined}>{error ? fieldError(error) : props.help}</FieldHelp>
         </FormGroup>
     );
 });
