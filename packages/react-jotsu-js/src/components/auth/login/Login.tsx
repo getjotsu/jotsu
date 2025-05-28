@@ -64,7 +64,6 @@ const Login = (props: LoginProps): React.JSX.Element => {
         setFormError('');
     };
 
-
     const onSubmit: SubmitHandler<LoginFormRequest> = async (data) => {
         try {
             setBusy(true);
@@ -93,6 +92,7 @@ const Login = (props: LoginProps): React.JSX.Element => {
         >
             {props.header}
             <FormHelp id={'login-form-help'}>{formError}</FormHelp>
+            {props.children}
             <LoginEmailFormGroup
                 help={props.help?.email}
                 {...register('username', {

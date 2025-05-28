@@ -1,4 +1,4 @@
-import type { HTMLProps, ReactNode } from 'react';
+import type { HTMLProps, PropsWithChildren, ReactNode } from 'react';
 import type { UseFormReturn } from 'react-hook-form';
 import type { Client } from '@jotsu/jotsu-js';
 
@@ -6,7 +6,7 @@ export interface BaseProps {
     unstyled?: boolean;
 }
 
-export interface AuthFormProps extends BaseProps {
+export interface AuthFormProps extends PropsWithChildren<BaseProps> {
     /** The Jotsu Client instance */
     apiClient: Client;
     /** The text for the submit button. */
@@ -22,9 +22,11 @@ export interface AuthFormProps extends BaseProps {
     };
 }
 
-export type AuthFormGroupProps = BaseProps & Partial<UseFormReturn> & HTMLProps<HTMLInputElement> & {
-    errors: UseFormReturn['formState']['errors'];
-    help?: ReactNode;
-};
+export type AuthFormGroupProps = BaseProps &
+    Partial<UseFormReturn> &
+    HTMLProps<HTMLInputElement> & {
+        errors: UseFormReturn['formState']['errors'];
+        help?: ReactNode;
+    };
 
-export type {Client, ErrorDetail, FormInstance} from '@jotsu/jotsu-js';
+export type { Client, ErrorDetail, FormInstance } from '@jotsu/jotsu-js';

@@ -91,6 +91,7 @@ const ForgotPassword = (
         >
             {props.header}
             <FormHelp id={'forgot-password-form-help'}>{formError}</FormHelp>
+            {props.children}
             <ForgotPasswordEmailFormGroup
                 help={props.help?.email}
                 {...register('email', {

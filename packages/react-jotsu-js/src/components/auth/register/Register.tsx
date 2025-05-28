@@ -2,13 +2,7 @@ import React, { ReactNode, useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import classNames from 'classnames';
 
-import {
-    type User,
-    type RegisterData,
-    getErrorDetail,
-    register as registerService,
-    isFunction
-} from '@jotsu/jotsu-js';
+import { type User, type RegisterData, getErrorDetail, register as registerService, isFunction } from '@jotsu/jotsu-js';
 
 import BaseForm from 'components/forms/BaseForm';
 import FormHelp from 'components/forms/FormHelp';
@@ -51,10 +45,10 @@ export interface RegisterProps extends Omit<AuthFormProps, 'show'> {
     /** Specify what option information to collect. */
     show?: Exclude<AuthFormProps['show'], undefined> & {
         /** Show the first and last names fields? */
-        firstLastName?: boolean
+        firstLastName?: boolean;
     };
     /** Minimum number of characters for a password.   Must be >= 8, default=12. */
-    passwordMinLength?: number
+    passwordMinLength?: number;
 }
 
 /**
@@ -72,7 +66,7 @@ const Register = (props: RegisterProps): React.JSX.Element => {
         handleSubmit,
         reset,
         watch,
-        formState: { errors }
+        formState: { errors },
     } = useForm<RegisterFormData>();
 
     const [busy, setBusy] = useState(false);
@@ -80,7 +74,7 @@ const Register = (props: RegisterProps): React.JSX.Element => {
     const [successEmail, setSuccessEmail] = useState<string>('');
 
     const className = classNames('register-form', {
-        error: !!formError
+        error: !!formError,
     });
 
     const onReset = () => {
@@ -131,21 +125,22 @@ const Register = (props: RegisterProps): React.JSX.Element => {
                 <>
                     <RegisterFirstNameFormGroup
                         {...register('first_name', {
-                            required: true
+                            required: true,
                         })}
                         errors={errors}
                     />
                     <RegisterLastNameFormGroup
                         {...register('last_name', {
-                            required: true
+                            required: true,
                         })}
                         errors={errors}
                     />
                 </>
             )}
+            {props.children}
             <RegisterEmailFormGroup
                 {...register('username', {
-                    required: true
+                    required: true,
                 })}
                 errors={errors}
             />
@@ -154,9 +149,9 @@ const Register = (props: RegisterProps): React.JSX.Element => {
                     required: true,
                     validate: (val: string) => {
                         if (!PasswordValidator.isValid(val)) {
-                            return 'The password is not sufficiently complex.'
+                            return 'The password is not sufficiently complex.';
                         }
-                    }
+                    },
                 })}
                 autoComplete={'new-password'}
                 errors={errors}
@@ -168,7 +163,7 @@ const Register = (props: RegisterProps): React.JSX.Element => {
                         if (watch('password') != val) {
                             return 'The passwords must match.';
                         }
-                    }
+                    },
                 })}
                 autoComplete={'new-password'}
                 errors={errors}
