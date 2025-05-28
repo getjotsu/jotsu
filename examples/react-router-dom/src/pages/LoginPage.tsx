@@ -26,7 +26,9 @@ const LoginPage = () => {
                     show={{
                         reset: true,
                     }}
-                />
+                >
+                    <span /> {/* Useless element to show Login has children. */}
+                </Login>
             </section>
         </Page>
     );
