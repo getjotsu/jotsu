@@ -29,6 +29,7 @@ const PasswordFormGroup = React.forwardRef<HTMLInputElement, AuthFormGroupProps>
             />
             <PasswordValidator
                 style={{ display: focused ? 'block' : 'none', margin: props.unstyled ? undefined : '0 0 2em 0' }} // negative margin when show
+                length={props.minLength}
                 password={password}
             />
         </>

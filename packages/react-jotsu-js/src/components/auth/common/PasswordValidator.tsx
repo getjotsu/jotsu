@@ -5,12 +5,12 @@ export const PASSWORD_MIN_LENGTH = 12;
 
 const validate = (value: string, length: number) => {
     return {
-        upper: /[A-Z]/.test(value),
-        lower: /[a-z]/.test(value),
-        number: /[0-9]/.test(value),
-        symbol: /[^A-Za-z0-9]/.test(value),
+        upper: value && /[A-Z]/.test(value),
+        lower: value && /[a-z]/.test(value),
+        number: value && /[0-9]/.test(value),
+        symbol: value && /[^A-Za-z0-9]/.test(value),
         length: value && value.length >= length,
-        noTriple: !/(.)\1\1/.test(value)
+        noTriple: !/(.)\1\1/.test(value),
     } as { [key: string]: boolean };
 };
 
@@ -24,7 +24,7 @@ const score = (status: { [key: string]: boolean }) => {
     return n;
 };
 
-const isValid = (value: string, length: number|undefined = undefined) => {
+const isValid = (value: string, length: number | undefined = undefined) => {
     length = length ? length : PASSWORD_MIN_LENGTH;
 
     const status = validate(value, length);
@@ -32,13 +32,13 @@ const isValid = (value: string, length: number|undefined = undefined) => {
 };
 
 const PasswordValidator = (props: {
-    className?: string
+    className?: string;
     style?: CSSProperties;
-    unstyled?: boolean
+    unstyled?: boolean;
     password: string;
-    length?: number,
+    length?: number;
 }) => {
-    const length = props.length ? props.length : PASSWORD_MIN_LENGTH
+    const length = props.length ? props.length : PASSWORD_MIN_LENGTH;
 
     const status = validate(props.password, length);
     const n = score(status);
@@ -52,7 +52,7 @@ const PasswordValidator = (props: {
         >
             Your password must contain:
             <ul style={{ marginTop: 0 }}>
-                <li className={className('length')}>At least {props.length} characters.</li>
+                <li className={className('length')}>At least {length} characters.</li>
                 <li className={n >= 3 ? 'met' : 'unmet'}>
                     At least 3 of the following:
                     <ul>
